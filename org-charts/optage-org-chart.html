@@ -511,14 +511,36 @@ body {
 
   .tree-viewport {
     padding: 16px 12px;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
   }
   .tree-viewport .tree-inner {
-    transform: scale(0.65);
-    transform-origin: top left;
-    min-width: max-content;
+    width: max-content;
+    padding-right: 20px;
   }
+
+  /* Shrink cards naturally on mobile */
+  .tree-viewport .card { padding: 8px 12px; min-width: 100px; }
+  .tree-viewport .card .name { font-size: 11px; }
+  .tree-viewport .card .sub { font-size: 9px; }
+  .tree-viewport .card .badge { font-size: 7px; }
+  .tree-viewport .card.board, .tree-viewport .card.ceo, .tree-viewport .card.director {
+    min-width: 140px; padding: 10px 14px;
+  }
+  .tree-viewport .card.board .name, .tree-viewport .card.ceo .name, .tree-viewport .card.director .name {
+    font-size: 13px;
+  }
+  .tree-viewport .card.exec { min-width: 120px; padding: 9px 12px; }
+  .tree-viewport .card.exec .name { font-size: 12px; }
+  .tree-viewport .card.dept { min-width: 115px; padding: 8px 11px; }
+  .tree-viewport .card.team { min-width: 100px; padding: 7px 10px; }
+  .tree-viewport .card.compact { min-width: 85px; padding: 6px 8px; }
+  .tree-viewport .card.compact .name { font-size: 10px; }
+  .tree-viewport .card.division { min-width: 130px; padding: 9px 12px; }
+  .tree-viewport .card.division .name { font-size: 12px; }
+  .tree-viewport .hl-tag { font-size: 6.5px; padding: 1px 5px; }
+  .tree-viewport .members-list { font-size: 9px; }
 
   .detail-section { padding: 16px 12px; margin: 0 0 24px; }
   .division-block { padding: 14px 12px; }
@@ -544,9 +566,12 @@ body {
   .page { padding: 16px 8px 80px; }
   .home-header h1 { font-size: 16px; }
 
-  .tree-viewport .tree-inner {
-    transform: scale(0.5);
-  }
+  /* 480px: even smaller cards */
+  .tree-viewport .card { padding: 6px 9px; min-width: 85px; }
+  .tree-viewport .card .name { font-size: 10px; }
+  .tree-viewport .card .sub { font-size: 8px; }
+  .tree-viewport .card.compact { min-width: 72px; padding: 5px 7px; }
+  .tree-viewport .card.compact .name { font-size: 9px; }
 
   .note-box { padding: 12px 14px; }
   .note-box h4 { font-size: 12px; }
