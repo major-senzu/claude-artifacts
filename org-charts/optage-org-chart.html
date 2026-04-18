@@ -393,10 +393,68 @@
   .lb.study-l { border-color: var(--hl-study); border-width: 2.5px; background: var(--hl-study-bg); }
 
   /* Responsive */
+  @media (max-width: 1024px) {
+    .tree-node > .tree-children {
+      flex-direction: column; align-items: center;
+    }
+    .tree-child { padding: 16px 0 0; }
+    .tree-child::after { display: none; }
+    .tree-child::before { height: 16px; }
+    .tree-node > .tree-children::before { height: 16px; }
+    .tree-node > .tree-children { padding-top: 16px; }
+    .detail-section { padding: 20px 16px; }
+  }
+
   @media (max-width: 768px) {
+    body { padding: 20px 12px 60px; }
+    header { margin-bottom: 32px; }
+    header h1 { font-size: 18px; }
+
+    .card { white-space: normal; min-width: 0 !important; max-width: 100%; word-break: break-word; }
+    .card.board, .card.ceo, .card.director, .card.exec, .card.dept, .card.team, .card.member, .card.division, .card.compact {
+      min-width: 0 !important; width: 100%; max-width: 320px;
+    }
+
     .dept-grid { flex-direction: column; align-items: center; }
+    .dept-grid .card { max-width: 100%; width: 100%; }
     .note-grid { grid-template-columns: 1fr; }
     .legend-grid { grid-template-columns: 1fr; }
+
+    .detail-section { padding: 16px 12px; margin: 0 0 24px; }
+    .division-block { padding: 14px 12px; }
+    .vice-heads { gap: 6px; }
+    .vice-head-chip { font-size: 11px; padding: 3px 8px; }
+
+    .section-title h2 { font-size: 14px; }
+    .section-title { margin: 32px 0 16px; }
+
+    .scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* Table responsive */
+    .person-table { font-size: 11px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .person-table thead, .person-table tbody, .person-table tr { display: table; width: 100%; table-layout: auto; }
+    .person-table th, .person-table td { padding: 6px 8px; }
+    .person-table td.bio { max-width: 260px; font-size: 10px; }
+
+    .legend { padding: 14px 16px; }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 16px 8px 40px; }
+    header h1 { font-size: 16px; }
+    .card.board, .card.ceo, .card.director, .card.exec, .card.dept, .card.team, .card.member, .card.division, .card.compact {
+      max-width: 280px; padding: 10px 12px !important;
+    }
+    .card .name { font-size: 12px !important; }
+    .card .sub { font-size: 9px; }
+    .card .badge { font-size: 7px; }
+
+    .note-box { padding: 12px 14px; }
+    .note-box h4 { font-size: 12px; }
+    .note-box p { font-size: 11px; }
+
+    .person-table th, .person-table td { padding: 5px 6px; font-size: 10px; }
+    .person-table td.bio { max-width: 200px; font-size: 9px; }
   }
 </style>
 </head>
