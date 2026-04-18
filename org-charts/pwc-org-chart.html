@@ -369,6 +369,68 @@
   .lb.leader    { border-color: #bbb; }
   .lb.loose     { border-color: #ccc; border-style: dashed; }
   .lb.junior    { border-color: #ddd; background: #f9f9f8; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .tree-node > .tree-children {
+      flex-direction: column; align-items: center;
+    }
+    .tree-child { padding: 16px 0 0; }
+    .tree-child::after { display: none; }
+    .tree-child::before { height: 16px; }
+    .tree-node > .tree-children::before { height: 16px; }
+    .tree-node > .tree-children { padding-top: 16px; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 20px 12px 60px; }
+    header { margin-bottom: 32px; }
+    header h1 { font-size: 18px; }
+    header .meta { font-size: 10px; }
+
+    .card { white-space: normal; min-width: 0 !important; max-width: 100%; word-break: break-word; }
+    .card.head, .card.director, .card.gl, .card.devteam, .card.leader, .card.junior {
+      min-width: 0 !important; width: 100%; max-width: 320px;
+    }
+
+    .members-grid { grid-template-columns: 1fr; gap: 24px; }
+    .member-row { grid-template-columns: 90px 70px 1fr; gap: 6px; padding: 6px 8px; font-size: 11px; }
+    .member-row .m-name { font-size: 11px; }
+    .member-row .m-note { font-size: 10px; }
+
+    .legend-grid { grid-template-columns: 1fr; }
+    .legend { padding: 14px 16px; }
+    .legend-item { font-size: 11px; }
+
+    .person-db table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .person-db th, .person-db td { padding: 7px 8px; }
+    .person-db .detail { font-size: 10px; }
+
+    .data-section { padding: 12px 14px; }
+    .data-row { flex-direction: column; gap: 4px; font-size: 10px; }
+    .data-row .dr-label { min-width: auto; }
+
+    .team-note-box { font-size: 10px; padding: 10px 12px; }
+    .global-note { font-size: 8px; max-width: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 16px 8px 40px; }
+    header h1 { font-size: 16px; }
+    header .meta { font-size: 9px; }
+
+    .card.head, .card.director, .card.gl, .card.devteam, .card.leader, .card.junior {
+      max-width: 280px; padding: 10px 12px !important;
+    }
+    .card .name { font-size: 12px !important; }
+    .card .badge { font-size: 7px; }
+
+    .member-row { grid-template-columns: 1fr; }
+    .member-row .m-role { padding-top: 0; }
+
+    .person-db th, .person-db td { padding: 5px 6px; font-size: 9px; }
+    .person-db .pn { font-size: 10px; }
+  }
 </style>
 </head>
 <body>
