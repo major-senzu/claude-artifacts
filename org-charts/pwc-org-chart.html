@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STDO セキュリティチーム 組織図</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --border: #d4d4d4;
+    --border-light: #e8e8e8;
+    --text: #111111;
+    --text-muted: #444444;
+    --text-dim: #999999;
+    --line: #c0c0c0;
+    --line-w: 1.5px;
+    --v-gap: 26px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+
+  /* ─── Header ─── */
+  header { text-align: center; margin-bottom: 52px; }
+  header .label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 8px;
+  }
+  header h1 { font-size: 22px; font-weight: 700; }
+  header .meta {
+    margin-top: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px; color: var(--text-dim);
+  }
+
+  /* ─── Section Headers ─── */
+  .sec-header {
+    padding: 5px 14px 5px 12px;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sec-header.info  { background: #1a1a1a; color: #fff; }
+  .sec-header.cyber { background: #e6e6e6; color: #444; border: 1px solid #ccc; }
+  .sec-header .gov-note {
+    font-size: 8px; font-weight: 400; letter-spacing: 0.06em;
+    opacity: 0.75;
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 17px;
+    min-width: 124px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .card .badge {
+    font-family: 'Poppins', sans-serif;
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 3px;
+  }
+  .card .name { font-size: 13px; font-weight: 700; line-height: 1.3; }
+
+  /* Head */
+  .card.head {
+    border: 2px solid #555; min-width: 196px; padding: 15px 22px;
+    background: #fafafa;
+  }
+  .card.head .badge { font-size: 9px; color: var(--text-muted); }
+  .card.head .name  { font-size: 17px; }
+
+  /* Director */
+  .card.director { border: 2px solid #111; min-width: 196px; padding: 15px 22px; }
+  .card.director .badge { font-size: 9px; color: var(--text-muted); }
+  .card.director .name  { font-size: 18px; }
+  .badge-auth {
+    display: inline-block; margin-top: 6px;
+    border: 1px solid #111; border-radius: 3px;
+    padding: 1px 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 8px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* GL */
+  .card.gl { border-color: #666; min-width: 136px; }
+  .card.gl .name { font-size: 14px; }
+
+  /* Dev-team */
+  .card.devteam {
+    border-color: #555; border-style: dashed;
+    min-width: 144px; background: #f9f9f8;
+  }
+  .card.devteam .name { font-size: 13px; }
+  .card.devteam .sub {
+    margin-top: 3px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 8px; color: #777; letter-spacing: 0.05em;
+  }
+
+  /* Leader */
+  .card.leader { border-color: #bbb; min-width: 116px; }
+  .card.leader .name  { font-size: 13px; }
+
+  /* Important leader */
+  .card.leader.key { border-color: #222; border-width: 2px; }
+  .key-badge {
+    display: inline-block; margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 7.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #111; border: 1px solid #111; border-radius: 3px; padding: 1px 7px;
+  }
+
+  /* Loose classification */
+  .card.loose { border-color: #ccc; border-style: dashed; }
+
+  /* Junior */
+  .card.junior { border-color: var(--border-light); background: #f9f9f8; min-width: 116px; }
+  .card.junior .name { font-size: 12px; font-weight: 500; }
+
+  /* Note tag on a card */
+  .note-tag {
+    margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 7.5px; color: var(--text-dim); letter-spacing: 0.05em;
+  }
+
+  /* Decision badge */
+  .decision-badge {
+    display: inline-block; margin-top: 5px;
+    padding: 2px 8px; border-radius: 3px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 7.5px; font-weight: 700; letter-spacing: 0.08em;
+    background: #f0f0f0; color: #222; border: 1.5px solid #888;
+  }
+
+  /* Global governance badge */
+  .gov-badge {
+    display: inline-block; margin-top: 5px;
+    padding: 2px 7px; border-radius: 3px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 7.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    background: #e6e6e6; color: #555; border: 1px solid #ccc;
+  }
+
+  /* ARR note */
+  .arr-badge {
+    display: inline-block; margin-top: 5px;
+    padding: 2px 7px; border-radius: 3px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 7.5px; font-weight: 600; letter-spacing: 0.08em;
+    background: #f0f0f0; color: #666; border: 1px solid #ddd;
+  }
+
+  /* Consulting background badge */
+  .consul-badge {
+    display: inline-block; margin-top: 5px;
+    padding: 2px 7px; border-radius: 3px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 7.5px; font-weight: 600; letter-spacing: 0.08em;
+    background: #eef; color: #446; border: 1px solid #ccd;
+  }
+
+  /* ─── Tree engine ─── */
+  .tree-node {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .tree-node > .tree-children {
+    position: relative;
+    display: flex; flex-direction: row; align-items: flex-start;
+    padding-top: var(--v-gap);
+  }
+  .tree-node > .tree-children::before {
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: var(--line-w); height: var(--v-gap);
+    background: var(--line);
+  }
+  .tree-child {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    padding: var(--v-gap) 8px 0;
+  }
+  .tree-child::before {
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: var(--line-w); height: var(--v-gap);
+    background: var(--line);
+  }
+  .tree-child::after {
+    content: '';
+    position: absolute; top: 0;
+    height: var(--line-w); background: var(--line);
+  }
+  .tree-child:first-child:last-child::after                     { display: none; }
+  .tree-child:first-child:not(:last-child)::after               { left: 50%; right: 0; }
+  .tree-child:last-child:not(:first-child)::after               { left: 0; right: 50%; }
+  .tree-child:not(:first-child):not(:last-child)::after         { left: 0; right: 0; }
+
+  /* ─── Section wrapper ─── */
+  .section-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+
+  /* ─── Global governance note box ─── */
+  .global-note {
+    margin-top: 14px;
+    background: #f0f0f0;
+    border: 1px dashed #bbb;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px; color: #666;
+    text-align: center; line-height: 1.5;
+    max-width: 300px;
+  }
+
+  /* ─── Members Section ─── */
+  .members-section {
+    margin: 48px auto 0; max-width: 960px;
+  }
+  .members-section h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 18px; text-align: center;
+  }
+  .members-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .members-col-header {
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 10px;
+    display: inline-block;
+  }
+  .members-col-header.info  { background: #1a1a1a; color: #fff; }
+  .members-col-header.cyber { background: #e6e6e6; color: #444; border: 1px solid #ccc; }
+  .member-row {
+    display: grid; grid-template-columns: 100px 80px 1fr;
+    gap: 8px; align-items: start;
+    padding: 8px 10px; border-bottom: 1px solid var(--border-light);
+    font-size: 12px;
+  }
+  .member-row:last-child { border-bottom: none; }
+  .member-row .m-name { font-weight: 700; font-size: 12px; }
+  .member-row .m-role {
+    font-family: 'Poppins', sans-serif; font-size: 9px;
+    color: var(--text-dim); letter-spacing: 0.05em; padding-top: 2px;
+  }
+  .member-row .m-note { font-size: 11px; color: var(--text-muted); line-height: 1.6; white-space: normal; }
+  .member-row .m-note strong { font-weight: 600; color: #333; }
+  .member-card-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .team-note-box {
+    margin-top: 14px;
+    background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px;
+    padding: 11px 15px; font-size: 11px; color: var(--text-muted); line-height: 1.7;
+  }
+  .team-note-box .tn-title {
+    font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #555; margin-bottom: 7px;
+  }
+  .team-note-box ul { padding-left: 16px; margin: 0; }
+  .team-note-box ul li { margin-bottom: 3px; }
+
+  /* ─── Person Database ─── */
+  .person-db {
+    margin: 48px auto 0; max-width: 960px;
+  }
+  .person-db h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 18px; text-align: center;
+  }
+  .person-db table {
+    width: 100%; border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 11px;
+  }
+  .person-db th {
+    background: #f5f5f5; text-align: left;
+    padding: 10px 12px; font-size: 10px; font-weight: 700;
+    font-family: 'Poppins', sans-serif; letter-spacing: 0.08em;
+    color: var(--text-muted); border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  .person-db td {
+    padding: 9px 12px; border-bottom: 1px solid var(--border-light);
+    color: var(--text-muted); line-height: 1.6; vertical-align: top;
+  }
+  .person-db tr:last-child td { border-bottom: none; }
+  .person-db .pn { font-weight: 700; color: var(--text); white-space: nowrap; }
+  .person-db .dept { white-space: nowrap; font-size: 10px; }
+  .person-db .detail { font-size: 11px; }
+  .person-db .detail ul { padding-left: 14px; margin: 0; }
+  .person-db .detail li { margin-bottom: 2px; }
+
+  /* ─── Data Section ─── */
+  .data-section {
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 8px; padding: 14px 18px;
+    max-width: 960px; margin-left: auto; margin-right: auto;
+  }
+  .data-section .ds-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 10px;
+  }
+  .data-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 7px 0; border-bottom: 1px solid var(--border-light);
+    font-size: 11px; color: var(--text-muted); line-height: 1.6;
+  }
+  .data-row:last-child { border-bottom: none; }
+  .data-row .dr-label {
+    font-weight: 700; color: #333; min-width: 72px; font-size: 11px; flex-shrink: 0;
+  }
+
+  /* ─── Legend ─── */
+  .legend {
+    margin: 52px auto 0; max-width: 580px;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 8px; padding: 18px 24px;
+  }
+  .legend h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 13px;
+  }
+  .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 28px; }
+  .legend-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); }
+  .lb { width: 30px; height: 18px; border-radius: 3px; border: 1.5px solid; flex-shrink: 0; }
+  .lb.head      { border-color: #555; border-width: 2px; background: #fafafa; }
+  .lb.director  { border-color: #111; border-width: 2px; }
+  .lb.gl        { border-color: #666; }
+  .lb.devteam   { border-color: #555; border-style: dashed; background: #f9f9f8; }
+  .lb.key       { border-color: #222; border-width: 2px; }
+  .lb.leader    { border-color: #bbb; }
+  .lb.loose     { border-color: #ccc; border-style: dashed; }
+  .lb.junior    { border-color: #ddd; background: #f9f9f8; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">Security Trust & Data Office</div>
+  <h1>STDO セキュリティチーム 組織図</h1>
+  <p class="meta">STDO &nbsp;|&nbsp; Head 1 &nbsp;/&nbsp; Director 1 &nbsp;/&nbsp; Group Leader 3 &nbsp;/&nbsp; Leader 7〜8 &nbsp;/&nbsp; Total ~30名 &nbsp;|&nbsp; Updated 2026-04-14</p>
+</header>
+
+<!-- ════════════════════════════════
+     TREE
+════════════════════════════════ -->
+<div class="tree-node">
+
+  <!-- STDO HEAD: 外村さん -->
+  <div class="card head">
+    <div class="badge">Head — STDO / IT部門</div>
+    <div class="name">外村さん</div>
+    <div class="note-tag">STDO + IT部門 統括</div>
+    <div class="note-tag">軽井沢・東京</div>
+  </div>
+
+  <div class="tree-children">
+    <div class="tree-child">
+      <div class="tree-node">
+
+        <!-- DIRECTOR: 守屋さん -->
+        <div class="card director">
+          <div class="badge">Director — STDO</div>
+          <div class="name">守屋さん</div>
+          <div class="badge-auth">決裁権</div>
+          <div class="consul-badge">コンサル出身</div>
+        </div>
+
+        <!-- 3 branches: 情報 | サイバー | 山梨 -->
+        <div class="tree-children">
+
+          <!-- ═══════════════════════════
+               情報セキュリティ
+          ═══════════════════════════ -->
+          <div class="tree-child">
+            <div class="section-wrap">
+              <div class="sec-header info">
+                情報セキュリティ
+                <span class="gov-note">JP ローカル管轄</span>
+              </div>
+
+              <div class="tree-node">
+                <div class="tree-children">
+
+                  <!-- 開発チーム（守屋兼任） -->
+                  <div class="tree-child">
+                    <div class="tree-node">
+                      <div class="card devteam">
+                        <div class="badge">開発チーム</div>
+                        <div class="name">守屋さん</div>
+                        <div class="sub">兼 現場リーダー</div>
+                      </div>
+                      <div class="tree-children">
+                        <div class="tree-child">
+                          <div class="card leader key">
+                            <div class="badge">Leader</div>
+                            <div class="name">山倉さん</div>
+                            <div class="key-badge">Key Person</div>
+                          </div>
+                        </div>
+                        <div class="tree-child">
+                          <div class="card leader key">
+                            <div class="badge">Leader</div>
+                            <div class="name">小川さん</div>
+                            <div class="key-badge">Key Person</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- GL① ガバナンスコアチーム（鈴木みほさん） -->
+                  <div class="tree-child">
+                    <div class="tree-node">
+                      <div class="card gl">
+                        <div class="badge">ガバナンスコアチーム</div>
+                        <div class="name">鈴木みほさん</div>
+                        <div class="decision-badge">ある程度の決裁可</div>
+                        <div class="note-tag">JPセキュリティルール策定</div>
+                        <div class="note-tag">社員向け問い合わせ対応</div>
+                        <div class="note-tag">取扱: 規定系 / 標準回答集（FAQ）</div>
+                      </div>
+                      <div class="tree-children">
+
+                        <!-- 吉田まりこさん：研修業務 -->
+                        <div class="tree-child">
+                          <div class="tree-node">
+                            <div class="card leader loose">
+                              <div class="badge">Leader</div>
+                              <div class="name">吉田まりこさん</div>
+                              <div class="consul-badge">コンサル出身</div>
+                              <div class="note-tag">研修業務</div>
+                              <div class="note-tag">情報寄り（緩い区分）</div>
+                            </div>
+                            <div class="tree-children">
+                              <div class="tree-child">
+                                <div class="card junior loose">
+                                  <div class="badge">Member</div>
+                                  <div class="name">増子さん</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- 鈴木さん自身：経営層向け報告 -->
+                        <div class="tree-child">
+                          <div class="card leader" style="border-style: dashed; border-color: #666; background: #f9f9f8;">
+                            <div class="badge">Leader</div>
+                            <div class="name">鈴木みほさん</div>
+                            <div class="note-tag">経営層向けセキュリティ施策報告</div>
+                            <div class="note-tag">兼 ガバナンスコアチーム GL</div>
+                          </div>
+                        </div>
+
+                        <!-- 田中さん：問い合わせ対応 -->
+                        <div class="tree-child">
+                          <div class="tree-node">
+                            <div class="card leader" style="border-style: dashed; border-color: #888; background: #f9f9f8;">
+                              <div class="badge">Leader</div>
+                              <div class="name">田中さん</div>
+                              <div class="key-badge">AI導入最有力</div>
+                              <div class="note-tag">他チーム兼務</div>
+                            </div>
+                            <div class="tree-children">
+                              <div class="tree-child">
+                                <div class="tree-node">
+                                  <div class="card junior">
+                                    <div class="badge">Member</div>
+                                    <div class="name">古川さん</div>
+                                    <div class="note-tag">25年10月入社</div>
+                                    <div class="note-tag">クライアント問い合わせ対応（メイン）</div>
+                                  </div>
+                                  <div class="tree-children">
+                                    <div class="tree-child">
+                                      <div class="card junior" style="border-style: dashed;">
+                                        <div class="badge">業務委託</div>
+                                        <div class="name">松戸さん</div>
+                                        <div class="note-tag">回答ドラフト作成（0.6人月）</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div><!-- end 情報 -->
+
+          <!-- ═══════════════════════════
+               サイバーセキュリティ
+          ═══════════════════════════ -->
+          <div class="tree-child">
+            <div class="section-wrap">
+              <div class="sec-header cyber">
+                サイバーセキュリティ
+                <span class="gov-note">グローバル管轄優先</span>
+              </div>
+
+              <div class="tree-node">
+                <div class="tree-children">
+
+                  <!-- GL② 磯貝さん -->
+                  <div class="tree-child">
+                    <div class="tree-node">
+                      <div class="card gl">
+                        <div class="badge">Group Leader ②</div>
+                        <div class="name">磯貝 徹さん</div>
+                      </div>
+                      <div class="tree-children">
+
+                        <!-- 長田さん（育休中）→ 与田さん -->
+                        <div class="tree-child">
+                          <div class="tree-node">
+                            <div class="card leader" style="opacity:0.6;">
+                              <div class="badge">Leader</div>
+                              <div class="name">長田さん</div>
+                              <div class="arr-badge">育休中</div>
+                            </div>
+                            <div class="tree-children">
+                              <div class="tree-child">
+                                <div class="card junior">
+                                  <div class="badge">Staff</div>
+                                  <div class="name">与田さん</div>
+                                  <div class="key-badge">データリスク評価PJ</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- 南部さん -->
+                        <div class="tree-child">
+                          <div class="card junior">
+                            <div class="badge">Staff</div>
+                            <div class="name">南部さん</div>
+                          </div>
+                        </div>
+
+                        <!-- 柳田さん -->
+                        <div class="tree-child">
+                          <div class="card junior">
+                            <div class="badge">Staff</div>
+                            <div class="name">柳田さん</div>
+                            <div class="note-tag">グローバルイニシアチブ推進</div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <!-- 部署の業務範囲（注釈） -->
+                      <div class="global-note" style="margin-top:10px;">
+                        ① グローバルイニシアチブ推進<br>
+                        ② サイバーハイジーン（脆弱性/パッチ管理）<br>
+                        ③ 新規アプリ・SaaSセキュリティ評価
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- GL③ -->
+                  <div class="tree-child">
+                    <div class="tree-node">
+                      <div class="card gl">
+                        <div class="badge">Group Leader</div>
+                        <div class="name">GL ③</div>
+                        <div class="note-tag">モニタリング・データマネジメント</div>
+                      </div>
+                      <div class="tree-children">
+                        <div class="tree-child">
+                          <div class="card leader" style="opacity:0.5;">
+                            <div class="badge">詳細不明</div>
+                            <div class="name">…</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="global-note">
+                グローバル Security チーム管轄<br>
+                グローバル制度が優先・ガバナンス複雑
+              </div>
+
+            </div>
+          </div><!-- end サイバー -->
+
+          <!-- ═══════════════════════════
+               山梨愛さん（守屋さん直轄）
+          ═══════════════════════════ -->
+          <div class="tree-child">
+            <div class="card gl">
+              <div class="badge">守屋さん直轄</div>
+              <div class="name">山梨愛さん</div>
+            </div>
+          </div>
+
+        </div><!-- end 3 branches -->
+
+      </div><!-- end 守屋 tree-node -->
+    </div><!-- end 守屋 tree-child -->
+  </div><!-- end 外村 tree-children -->
+
+</div><!-- end tree root -->
+
+
+<!-- ════════════════════════════════
+     部署の名称と役割
+════════════════════════════════ -->
+<div class="members-section">
+  <h2>部署の名称と役割</h2>
+  <div class="members-grid">
+
+    <!-- 情報セキュリティ -->
+    <div>
+      <div class="members-col-header info">情報セキュリティ</div>
+
+      <div class="team-note-box">
+        <div class="tn-title">開発チーム（守屋さん兼任）</div>
+        <ul>
+          <li>守屋さんが現場リーダーを兼任</li>
+          <li>情報セキュリティの開発寄りの業務</li>
+        </ul>
+      </div>
+
+      <div class="team-note-box" style="margin-top: 10px;">
+        <div class="tn-title">GL① ガバナンスコアチーム（鈴木みほさん）</div>
+        <ul>
+          <li>JPセキュリティルール策定</li>
+          <li>社員向け問い合わせ対応（グローバル＋国内ガイドラインを統合して回答）</li>
+          <li>経営層向けセキュリティ施策報告</li>
+          <li>研修業務</li>
+          <li>クライアント向けセキュリティチェックシート対応</li>
+          <li>取扱データ：規定系（PDF・SPO・PPTX）/ 標準回答集（FAQ）</li>
+        </ul>
+      </div>
+
+      <div class="data-section" style="margin-top: 10px;">
+        <div class="ds-title">ガバナンスコアチーム データについて</div>
+        <div class="data-row">
+          <div class="dr-label">把握状況</div>
+          <div>半分はどこに何があるか把握しているが、半分はPwC内で管理していないドキュメントも含まれる</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-label">難しさ</div>
+          <div>グローバルガイドラインと国内ガイドラインを複数検索して繋ぎ合わせるのが難しい</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-label">種類</div>
+          <div>規定系（PDF・SPO・PPTX）/ 標準回答集（FAQ）</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-label">オンボーディング</div>
+          <div>新入社員が規定ドキュメントを習得するのに約3ヶ月かかる</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- サイバーセキュリティ -->
+    <div>
+      <div class="members-col-header cyber">サイバーセキュリティ</div>
+
+      <div class="team-note-box">
+        <div class="tn-title">GL② サイバーチーム（磯貝 徹さん）</div>
+        <ul>
+          <li><strong>グローバルプロジェクトの推進</strong>
+            <ul><li>グローバルが導入するものを「イニシアチブ」と呼ぶ</li></ul>
+          </li>
+          <li><strong>サイバーhygiene（脆弱性管理）</strong>
+            <ul><li>パッチ管理・アカウント整理・サイバー関連の掃除</li></ul>
+          </li>
+          <li><strong>新規アプリケーション・SaaSのセキュリティ評価</strong>
+            <ul><li>ユーザー部門が導入したいアプリ/SaaSのセキュリティチェック</li></ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="team-note-box" style="margin-top: 10px;">
+        <div class="tn-title">GL③ モニタリング・データマネジメント</div>
+        <ul>
+          <li>内部脅威・データ管理を担当する部門</li>
+          <li>詳細メンバー構成は不明</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════
+     PERSON DATABASE
+════════════════════════════════ -->
+<div class="person-db">
+  <h2>登場人物データベース（全議事録 #1〜#9 より）</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>所属部署</th>
+        <th>詳細情報</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="pn">外村さん</td>
+        <td class="dept">STDO / IT部門<br>Head</td>
+        <td class="detail">
+          <ul>
+            <li>STDO（Security Trust & Data Office）およびIT部門のトップ</li>
+            <li>軽井沢と東京を行き来</li>
+            <li>守屋さんの上位</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">守屋さん</td>
+        <td class="dept">STDO<br>Director</td>
+        <td class="detail">
+          <ul>
+            <li>決裁権を持つDirector。開発チームも兼任で現場リーダー</li>
+            <li><strong>コンサル出身</strong></li>
+            <li><strong>STDO = Security Trust & Data Office（セキュリティチーム全体の正式名称）</strong></li>
+            <li>チャットボット等を使う技術に明るい人物</li>
+            <li>予算は6月まで最大2,300万円、うち750万円をチャットボットPJに配分</li>
+            <li>品質基準：「回答可能な範囲は100%の確信を持って回答すべき」</li>
+            <li>質問票業務をグローバルから自分の管轄下に移管済</li>
+            <li>初登場: #5</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">鈴木みほさん</td>
+        <td class="dept">GL① ガバナンスコア<br>Group Leader</td>
+        <td class="detail">
+          <ul>
+            <li>ガバナンスコアチーム統括。ある程度の決裁権あり（稟議不要のケースも）</li>
+            <li>自身も経営層向けセキュリティ施策の報告業務を兼任（AI導入困難領域）</li>
+            <li>JPセキュリティルール策定・社員向け問い合わせ対応を管轄</li>
+            <li>吉田さんからの提案を受けてメイクセンスか確認し、必要に応じ守屋さんに上げる</li>
+            <li>プロジェクト目標:「ベースの構築と規定情報の整理により、簡単に情報が収集できるレベル」</li>
+            <li>初登場: #8</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">吉田まりこさん</td>
+        <td class="dept">GL① ガバナンスコア<br>Leader</td>
+        <td class="detail">
+          <ul>
+            <li>Wanderlust側のメインカウンターパート。#2から全回参加</li>
+            <li><strong>コンサル出身</strong></li>
+            <li>研修業務担当だが、横断的に複数領域に関与</li>
+            <li>課題3（脆弱性パッチ/テスト自動化）、課題6（ドキュメント/スケジューリング）管理</li>
+            <li>技術的な理解力あり</li>
+            <li>増子さん・守屋さん寄りのポジション</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">増子さん</td>
+        <td class="dept">GL① ガバナンスコア<br>Member（5年目）</td>
+        <td class="detail">
+          <ul>
+            <li>セキュリティ規定の問い合わせ回答を実質1名で担当（月30h）</li>
+            <li>業務委託者（月140h・時給8,000円）と共に問い合わせ業務を運用</li>
+            <li>田中さんが多忙なため複雑な問い合わせ対応もカバー</li>
+            <li>新入社員の教育・業務サポート担当</li>
+            <li>契約の窓口役</li>
+            <li>増子さんが無理な案件は磯貝さんにエスカレーション</li>
+            <li>横断的に相談を受けるポジション</li>
+            <li>初登場: #2</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">田中さん</td>
+        <td class="dept">GL① ガバナンスコア<br>Leader</td>
+        <td class="detail">
+          <ul>
+            <li>日本のセキュリティルール作り、クライアント・社員からの問い合わせ対応</li>
+            <li>他チームのリーダーも兼務（兼務開始から半年未満）</li>
+            <li>多忙で問い合わせ対応の一部は増子さんがカバー</li>
+            <li>まだ業務の流れの理解は一部にとどまっている</li>
+            <li>配下に古川さん</li>
+            <li><strong>AI導入の最有力候補チーム</strong></li>
+            <li>初登場: #8</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">古川さん</td>
+        <td class="dept">GL① 田中さん配下<br>Member</td>
+        <td class="detail">
+          <ul>
+            <li>2025年10月入社（入社半年）。田中さんの部下</li>
+            <li><strong>メイン業務：クライアントからのセキュリティ問い合わせ対応</strong>（1日2〜4時間）</li>
+            <li>20〜300問のExcelシートに回答を記入する形式。体制・教育・暗号化・AI活用・サードパーティリスク等</li>
+            <li>回答の8割は見た瞬間に参照先の当たりがつく。5割はFAQ/社内規定からのコピペで対応可能</li>
+            <li>松戸さん（業務委託）がドラフト作成（0.6人月）→ 古川さんがレビュー。合計約1人月の工数</li>
+            <li>その他：規定・ルールの改定（常時）、四半期ごとのアセスメント対応</li>
+            <li>参照データ：SharePoint上のPDF・Word・Excel（全500ページ程度）</li>
+            <li>AIドラフト作成で業務委託1名分の削減可能性あり（本人見解）</li>
+            <li>懸念：グループ会社ごとの回答分岐、質問抽出精度、複雑なケースでの精度頭打ち</li>
+            <li>初登場: #8、詳細ヒアリング: #9</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">松戸さん</td>
+        <td class="dept">GL① 古川さん配下<br>業務委託</td>
+        <td class="detail">
+          <ul>
+            <li>クライアント問い合わせ回答のドラフト作成を担当（0.6人月程度）</li>
+            <li>古川さんよりも問い合わせ業務に長く携わっている</li>
+            <li>アクセスできる資料や最新情報に制限あり → 古川さんのレビューで情報補完</li>
+            <li>その他FAQ作成・手順書作成なども担当</li>
+            <li>AIドラフト作成で代替できれば削減可能性のある1名（古川さん見解）</li>
+            <li>初登場: #9</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">山倉さん</td>
+        <td class="dept">開発チーム（守屋直轄）<br>Leader</td>
+        <td class="detail">
+          <ul>
+            <li>守屋さん配下の開発チームリーダー。Key Person</li>
+            <li>初登場: #7</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">小川さん（開発チーム）</td>
+        <td class="dept">開発チーム（守屋直轄）<br>Leader</td>
+        <td class="detail">
+          <ul>
+            <li>守屋さん配下の開発チームリーダー。Key Person</li>
+            <li>初登場: #7</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">山梨愛さん</td>
+        <td class="dept">守屋さん直轄</td>
+        <td class="detail">
+          <ul>
+            <li>守屋さんの直轄メンバー</li>
+            <li>磯貝さん・鈴木さんと同列（守屋さん直下）</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">磯貝 徹さん</td>
+        <td class="dept">GL② サイバーチーム<br>Group Leader</td>
+        <td class="detail">
+          <ul>
+            <li>サイバーチーム統括。グローバル連携の主軸</li>
+            <li>データリスク評価PJ推進中（MITREアタックフレームワーク使用）</li>
+            <li>手作業で重要度の高い約20件に絞って進行中（全体は90件以上）</li>
+            <li>イニシャルアクセスフェーズのみにフォーカス中</li>
+            <li>5月末までに人手フェーズ完了 → 6月経営報告に盛り込む予定</li>
+            <li>GW明け（5月第2週）にWanderlustと進捗共有MTG予定</li>
+            <li>ガバナンスコアチームとは問い合わせ業務の領域でのみ関わる</li>
+            <li>初登場: #8（初対面）</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">長田さん</td>
+        <td class="dept">GL② サイバーチーム<br>Leader</td>
+        <td class="detail">
+          <ul>
+            <li>現在育休中。与田さんが配下</li>
+            <li>初登場: #7</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">南部さん</td>
+        <td class="dept">GL② サイバーチーム<br>Staff</td>
+        <td class="detail">
+          <ul>
+            <li>磯貝さん配下のスタッフ</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">与田さん</td>
+        <td class="dept">GL② サイバーチーム<br>Staff（長田さん配下）</td>
+        <td class="detail">
+          <ul>
+            <li>グローバルPJのイニシアチブを日本に導入する業務がメイン</li>
+            <li>脆弱性/パッチ管理、新規アプリ導入時のセキュリティ評価も担当</li>
+            <li>データリスク評価PJの実務を担当</li>
+            <li>GW明けの進捗MTGに参加予定</li>
+            <li>初登場: #7</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">柳田さん</td>
+        <td class="dept">GL② サイバーチーム<br>Staff</td>
+        <td class="detail">
+          <ul>
+            <li>グローバルイニシアチブの日本導入を担当</li>
+            <li>GW明けMTGのセット対象</li>
+            <li>初登場: #8</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">小川さん（守屋チーム?）</td>
+        <td class="dept">所属不確定</td>
+        <td class="detail">
+          <ul>
+            <li>大きめのPJを持っている</li>
+            <li>監査法人の縦割り構造で隣のPJ情報にアクセスできない問題あり</li>
+            <li>AI導入以前の問題としてPending中</li>
+            <li>開発チームの小川さんと同一人物かは不明</li>
+            <li>初登場: #8</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="pn">業務委託者A（名前不明）</td>
+        <td class="dept">GL① 増子さん配下<br>業務委託</td>
+        <td class="detail">
+          <ul>
+            <li>月140時間稼働、時給8,000円</li>
+            <li>増子さんと共に社内問い合わせ回答業務を担当</li>
+            <li>規定集を見ながら回答を作成し、正社員がレビュー</li>
+            <li>月間コスト約150万円（増子さんの工数含む）</li>
+            <li>初登場: #4</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- LEGEND -->
+<div class="legend">
+  <h2>Legend</h2>
+  <div class="legend-grid">
+    <div class="legend-item">
+      <div class="lb head"></div>
+      <span>Head（STDO トップ）</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb director"></div>
+      <span>Director（決裁権）</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb gl"></div>
+      <span>Group Leader</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb devteam"></div>
+      <span>開発チーム（守屋さん兼任）</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb key"></div>
+      <span>Leader / Key Person</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb leader"></div>
+      <span>Leader</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb loose"></div>
+      <span>Leader / Member（緩い区分）</span>
+    </div>
+    <div class="legend-item">
+      <div class="lb junior"></div>
+      <span>Member / Staff</span>
+    </div>
+    <div class="legend-item" style="grid-column: span 2; border-top: 1px solid #eee; padding-top: 10px; margin-top: 2px;">
+      <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+        <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:#555;">
+          <span style="background:#1a1a1a; color:#fff; padding:2px 8px; border-radius:3px; font-family:Poppins; font-size:8px; font-weight:700; letter-spacing:.12em;">情報セキュリティ</span>
+          JP ローカル管轄 — 守屋さんの匙加減で動く
+        </span>
+        <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:#555;">
+          <span style="background:#e6e6e6; color:#555; border:1px solid #ccc; padding:2px 8px; border-radius:3px; font-family:Poppins; font-size:8px; font-weight:700; letter-spacing:.12em;">サイバーセキュリティ</span>
+          グローバル管轄優先・制度複雑
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
