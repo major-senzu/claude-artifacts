@@ -130,9 +130,14 @@ body {
 .page {
   display: none;
   padding: 28px 20px 100px;
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
   animation: fadeIn 0.2s ease;
+}
+.page.page-wide {
+  max-width: 100%;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 .page.active { display: block; }
 
@@ -243,6 +248,10 @@ body {
   background: var(--surface);
   padding: 28px 24px;
   margin-bottom: 24px;
+}
+.tree-viewport .tree-inner {
+  display: inline-block;
+  min-width: max-content;
 }
 .tree-viewport::-webkit-scrollbar { height: 6px; width: 6px; }
 .tree-viewport::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
@@ -498,12 +507,17 @@ body {
 
   .swipe-hint { display: block; }
 
+  .page.page-wide { padding-left: 12px; padding-right: 12px; }
+
   .tree-viewport {
     padding: 16px 12px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  .tree-viewport .tree-node {
-    transform: scale(0.7);
+  .tree-viewport .tree-inner {
+    transform: scale(0.65);
     transform-origin: top left;
+    min-width: max-content;
   }
 
   .detail-section { padding: 16px 12px; margin: 0 0 24px; }
@@ -530,8 +544,8 @@ body {
   .page { padding: 16px 8px 80px; }
   .home-header h1 { font-size: 16px; }
 
-  .tree-viewport .tree-node {
-    transform: scale(0.55);
+  .tree-viewport .tree-inner {
+    transform: scale(0.5);
   }
 
   .note-box { padding: 12px 14px; }
@@ -641,13 +655,14 @@ body {
 <!-- ================================================================ -->
 <!-- PAGE: 全社組織概要                                                -->
 <!-- ================================================================ -->
-<div class="page" id="page-overview">
+<div class="page page-wide" id="page-overview">
   <div class="page-header">
     <button class="back-btn" onclick="navigateTo('home')">&#8592; ホーム</button>
     <h2><span class="pill overview">Overview</span> 全社組織概要</h2>
   </div>
 
   <div class="tree-viewport">
+<div class="tree-inner">
     <div class="tree-node">
       <div class="card board" style="min-width:160px; padding:12px 18px;">
         <div class="badge">代表取締役社長</div>
@@ -785,7 +800,8 @@ body {
 
       </div><!-- /tree-children -->
     </div><!-- /tree-node -->
-  </div><!-- /tree-viewport -->
+  </div>
+</div><!-- /tree-viewport -->
   <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
 </div>
 
@@ -793,7 +809,7 @@ body {
 <!-- ================================================================ -->
 <!-- PAGE: 河田本部長 管轄                                             -->
 <!-- ================================================================ -->
-<div class="page" id="page-kawada">
+<div class="page page-wide" id="page-kawada">
   <div class="page-header">
     <button class="back-btn" onclick="navigateTo('home')">&#8592; ホーム</button>
     <h2><span class="pill detail">Detail</span> ソリューション事業推進本部 ― 河田本部長 管轄</h2>
@@ -820,6 +836,7 @@ body {
       </div>
 
       <div class="tree-viewport" style="border:none; padding:16px 12px;">
+<div class="tree-inner">
         <div class="tree-node">
           <div class="card dept">
             <div class="badge">Department</div>
@@ -852,6 +869,7 @@ body {
           </div>
         </div>
       </div>
+</div>
       <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
     </div>
 
@@ -864,6 +882,7 @@ body {
       </div>
 
       <div class="tree-viewport" style="border:none; padding:16px 12px;">
+<div class="tree-inner">
         <div class="tree-node">
           <div class="card dept">
             <div class="badge">Department</div>
@@ -881,6 +900,7 @@ body {
           </div>
         </div>
       </div>
+</div>
       <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
     </div>
 
@@ -904,7 +924,7 @@ body {
 <!-- ================================================================ -->
 <!-- PAGE: 篠原本部長 管轄                                             -->
 <!-- ================================================================ -->
-<div class="page" id="page-shinohara">
+<div class="page page-wide" id="page-shinohara">
   <div class="page-header">
     <button class="back-btn" onclick="navigateTo('home')">&#8592; ホーム</button>
     <h2><span class="pill detail">Detail</span> ソリューション事業推進本部 ― 篠原本部長 管轄</h2>
@@ -938,6 +958,7 @@ body {
       <h4>SI&amp;DXビジネス部門 <span style="font-size:11px; color:#777; font-weight:400;">(佐伯さん 管下)</span></h4>
 
       <div class="tree-viewport" style="border:none; padding:16px 12px;">
+<div class="tree-inner">
         <div class="tree-node">
           <div class="card division">
             <div class="badge">Division</div>
@@ -1077,7 +1098,8 @@ body {
 
           </div><!-- /tree-children SI&DX -->
         </div><!-- /tree-node SI&DX -->
-      </div><!-- /tree-viewport -->
+      </div>
+</div><!-- /tree-viewport -->
       <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
     </div>
 
@@ -1096,7 +1118,7 @@ body {
 <!-- ================================================================ -->
 <!-- PAGE: その他重要部署                                               -->
 <!-- ================================================================ -->
-<div class="page" id="page-other">
+<div class="page page-wide" id="page-other">
   <div class="page-header">
     <button class="back-btn" onclick="navigateTo('home')">&#8592; ホーム</button>
     <h2><span class="pill other">Other Key</span> その他重要部署</h2>
@@ -1108,6 +1130,7 @@ body {
     <div class="subtitle">POC2対象部署を含む</div>
 
     <div class="tree-viewport" style="border:none; padding:16px 12px;">
+<div class="tree-inner">
       <div class="tree-node">
         <div class="card exec">
           <div class="badge">Consumer Business</div>
@@ -1125,6 +1148,7 @@ body {
         </div>
       </div>
     </div>
+</div>
     <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
   </div>
 
@@ -1134,6 +1158,7 @@ body {
     <div class="subtitle">技術イノベーション &amp; プラットフォーム技術 — 勉強会参加メンバー所属</div>
 
     <div class="tree-viewport" style="border:none; padding:16px 12px;">
+<div class="tree-inner">
       <div class="tree-node">
         <div class="card exec">
           <div class="badge">Technology</div>
@@ -1187,6 +1212,7 @@ body {
         </div>
       </div>
     </div>
+</div>
     <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
   </div>
 
@@ -1196,6 +1222,7 @@ body {
     <div class="subtitle">全社経営統括 &amp; 社内ITシステム</div>
 
     <div class="tree-viewport" style="border:none; padding:16px 12px;">
+<div class="tree-inner">
       <div class="tree-node">
         <div class="card exec">
           <div class="badge">Management</div>
@@ -1223,6 +1250,7 @@ body {
         </div>
       </div>
     </div>
+</div>
     <div class="swipe-hint">&larr; スワイプで全体を表示 &rarr;</div>
   </div>
 </div>
