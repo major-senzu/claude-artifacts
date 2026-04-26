@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>profile / shota ueyama</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --fg: #0a0a0a;
+    --muted: #888;
+    --line: #e5e5e5;
+    --soft: #f7f7f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 64px 48px 48px;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* breadcrumb */
+  .crumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    letter-spacing: 0.04em;
+  }
+
+  .crumb a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .crumb a:hover { border-bottom-color: var(--muted); color: var(--fg); }
+
+  .crumb .sep { margin: 0 8px; }
+
+  /* hero */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 56px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero h1 {
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .hero .ja {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .hero .tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--fg);
+    padding: 6px 12px;
+    background: var(--soft);
+    display: inline-block;
+    letter-spacing: 0.02em;
+  }
+
+  /* sections */
+  section {
+    margin-bottom: 56px;
+  }
+
+  h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h2 .num { color: var(--fg); margin-right: 12px; }
+
+  p { margin-bottom: 14px; }
+
+  p.lead {
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* facts grid */
+  .facts {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    row-gap: 12px;
+    column-gap: 24px;
+    font-size: 14px;
+  }
+
+  .facts dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    padding-top: 2px;
+  }
+
+  .facts dd {
+    color: var(--fg);
+  }
+
+  /* timeline */
+  ol.timeline {
+    list-style: none;
+    border-left: 1px solid var(--line);
+    padding-left: 24px;
+  }
+
+  ol.timeline li {
+    position: relative;
+    padding-bottom: 24px;
+  }
+
+  ol.timeline li::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    background: var(--bg);
+    border: 1.5px solid var(--fg);
+    border-radius: 50%;
+  }
+
+  ol.timeline .yr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  ol.timeline .ttl {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  ol.timeline .body {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  /* quote */
+  blockquote {
+    border-left: 2px solid var(--fg);
+    padding: 4px 0 4px 20px;
+    margin: 24px 0;
+    font-style: normal;
+  }
+
+  blockquote .q {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+
+  blockquote .src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* values */
+  .values {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .values .v {
+    background: var(--bg);
+    padding: 18px 20px;
+  }
+
+  .values .v .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .values .v .t {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  /* tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .tags span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    color: var(--fg);
+  }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  footer .socials { display: flex; gap: 14px; }
+
+  footer .socials a {
+    color: var(--fg);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  footer .socials a:hover { background: var(--fg); color: var(--bg); }
+
+  @media (max-width: 600px) {
+    body { padding: 40px 22px 32px; }
+    .hero { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .hero h1 { font-size: 26px; }
+    .facts { grid-template-columns: 1fr; row-gap: 4px; }
+    .facts dt { padding-top: 10px; }
+    .values { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="crumb">
+      <a href="../index.html">home</a><span class="sep">/</span>
+      <a href="../index.html#personal">personal</a><span class="sep">/</span>
+      <span>011 profile</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h1>Shota Ueyama</h1>
+        <div class="ja">植山 翔太 / うえやま しょうた</div>
+        <div class="tagline">"最強のナンバー2" になる</div>
+      </div>
+    </div>
+
+    <section>
+      <h2><span class="num">▸</span>about</h2>
+      <p class="lead">
+        慶應義塾大学法学部政治学科の学生。
+        生成AI / RAGコンサルティング会社「株式会社Wanderlust」に共同創業者として参画し、
+        Engineer → Sales → CoS → Biz PM と役割を変えながら、現在は次期COOを目指して修行中。
+      </p>
+      <p>
+        「家族 &gt; 仕事 &gt; 友達 &gt; お金」という優先順位を軸に、
+        急がず・余裕を持って・優しく生きることを大切にしている。
+        稲盛和夫やWarren Buffettのような長期的な経営者像に共感を覚えるタイプ。
+      </p>
+      <div class="tags">
+        <span>#法学部政治学科</span>
+        <span>#日韓関係</span>
+        <span>#RAG</span>
+        <span>#生成AI</span>
+        <span>#TWICE</span>
+        <span>#野球</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>facts</h2>
+      <dl class="facts">
+        <dt>born</dt><dd>2004.11.30 / 東京</dd>
+        <dt>current</dt><dd>慶應義塾大学 法学部政治学科（学籍番号 32351697）</dd>
+        <dt>company</dt><dd>株式会社Wanderlust — 共同創業者 / 次期COO候補</dd>
+        <dt>activity</dt><dd>KNOCK（慶應 国際関係会 日韓プロジェクト）</dd>
+        <dt>position</dt><dd>常に "副" の立場で力を発揮 — 副キャプテン・副主将・副委員長・副サークル長</dd>
+        <dt>education</dt><dd>明治大学付属明治中学校・高等学校 → 慶應義塾大学（AO入試）</dd>
+        <dt>sport</dt><dd>野球（中学・高校）／ ポジション: キャッチャー一筋</dd>
+        <dt>language</dt><dd>日本語（母語）／ 韓国語</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>motto</h2>
+      <blockquote>
+        <div class="q">"最強のナンバー2" になること。</div>
+        <div>CEOを務められる実力を持った者が、哲学を持ってCOOを担っている状態が最強。</div>
+        <div class="src">— shota's manifesto, 2026.04</div>
+      </blockquote>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>values</h2>
+      <div class="values">
+        <div class="v">
+          <div class="k">priority</div>
+          <div class="t">家族 &gt; 仕事 &gt; 友達 &gt; お金</div>
+        </div>
+        <div class="v">
+          <div class="k">style</div>
+          <div class="t">急がない・余裕・優しさ</div>
+        </div>
+        <div class="v">
+          <div class="k">role</div>
+          <div class="t">"副" として組織を支える</div>
+        </div>
+        <div class="v">
+          <div class="k">thinking</div>
+          <div class="t">逆張り志向 / 異質でありたい</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>life timeline</h2>
+      <ol class="timeline">
+        <li>
+          <div class="yr">2004</div>
+          <div class="ttl">東京・東京衛生病院にて誕生</div>
+          <div class="body">父は元水上スキー日本代表で兼松出身、現在は祖父の不動産会社を継ぐ実業家。母は商社事務職を経て専業主婦。</div>
+        </li>
+        <li>
+          <div class="yr">2010 — 杉並区立天沼小学校</div>
+          <div class="ttl">野球との出会い</div>
+          <div class="body">父に神宮球場へ連れていかれ、ホワイトセル選手のサヨナラホームランを目撃。野球クラブチーム「ポルテ」に所属、以降ずっとキャッチャー一筋。</div>
+        </li>
+        <li>
+          <div class="yr">2017 — 明治大学付属明治中学校</div>
+          <div class="ttl">TWICEとの出会い、日韓関係への関心</div>
+          <div class="body">サナ推しに。中3時、サナがInstagramで日韓関係を理由に炎上した件をきっかけに、日韓政治への強い関心が芽生える。これが後のAO入試の志望理由の原点となる。</div>
+        </li>
+        <li>
+          <div class="yr">2020 — 明治大学付属明治高等学校</div>
+          <div class="ttl">野球部 副主将 / AO入試への決断</div>
+          <div class="body">周囲の99%がエスカレーターで明治大学へ進む中、AO入試で慶應を志望。日韓団体・政治家・弁護士・障害者団体・バイセクシュアル当事者との交流会を主催し、世界の貧困問題にも実地で取り組む。</div>
+        </li>
+        <li>
+          <div class="yr">2023 — 慶應義塾大学 法学部政治学科</div>
+          <div class="ttl">AO入試で合格・入学</div>
+          <div class="body">志望理由書に「TWICEのサナ」の名前を明記。SFCには「アイドルグループを作り、韓国側のマーケターとして日韓の架け橋になる」と提出。インカレ野球サークル / 日韓サークルKNOCK（企画部長・副サークル長）/ ゴルフ部 / 企業サークルなど多方面で活動。</div>
+        </li>
+        <li>
+          <div class="yr">2024.09</div>
+          <div class="ttl">Wanderlust にJoin、大学を休学</div>
+          <div class="body">西川京さんの紹介でWanderlustと出会う。Engineer → Sales → CoS（経営室秘書）→ Biz PM と役割を変えながら成長。インド人エンジニアと3段ベッド×6台の共同生活も経験。</div>
+        </li>
+        <li>
+          <div class="yr">2025.11 — 2026.03</div>
+          <div class="ttl">スモールビジネス挑戦・撤退</div>
+          <div class="body">CEOとして挑戦したい想いから一度Wanderlustを離れ、起業アイデアメディア設立に約30万円を投資。20代後半で数億円を稼ぐ道筋は見えたが、その未来にワクワクできず撤退を決意。価値観を「家族＞仕事＞友達＞お金」と再定義。</div>
+        </li>
+        <li>
+          <div class="yr">2026.04 — 現在</div>
+          <div class="ttl">Wanderlust 復帰、次期COOへ</div>
+          <div class="body">"最強のナンバー2" を人生のモットーに、1日14時間の泊まり込み稼働で修行中。話の冗長性を削り、構造的に物事を抽出して話す力を磨く日々。</div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>travel log</h2>
+      <p>これまで20カ国以上を訪問。Wanderlustでの活動の中で、世界中を旅しながら働くスタイルを実践している。</p>
+      <div class="tags">
+        <span>🇺🇸 USA</span>
+        <span>🇨🇦 Canada</span>
+        <span>🇰🇭 Cambodia</span>
+        <span>🇹🇭 Thailand</span>
+        <span>🇻🇳 Vietnam</span>
+        <span>🇰🇷 Korea</span>
+        <span>🇨🇳 China</span>
+        <span>🇲🇾 Malaysia</span>
+        <span>🇰🇼 Kuwait</span>
+        <span>🇪🇬 Egypt</span>
+        <span>🇸🇦 Saudi</span>
+        <span>🇦🇪 UAE</span>
+        <span>🇵🇭 Philippines</span>
+        <span>🇮🇳 India</span>
+        <span>🇹🇷 Türkiye</span>
+        <span>🇩🇪 Germany</span>
+        <span>🇮🇹 Italy</span>
+        <span>🇬🇧 UK</span>
+        <span>🇪🇸 Spain</span>
+        <span>🇩🇰 Denmark</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>contact</h2>
+      <p>仕事のご相談・お問い合わせは X / Facebook の DM までお気軽にどうぞ。</p>
+    </section>
+
+    <footer>
+      <div>© 2026 shota ueyama · <a href="../index.html" style="color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);">back to home</a></div>
+      <div class="socials">
+        <a href="https://x.com/shota122937" target="_blank" rel="noopener">X</a>
+        <a href="https://www.facebook.com/profile.php?id=100052666599136" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

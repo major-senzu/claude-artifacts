@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shota ueyama</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --fg: #0a0a0a;
+    --muted: #888;
+    --line: #e5e5e5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 80px 48px 48px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+  }
+
+  header {
+    margin-bottom: 64px;
+  }
+
+  .id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .role {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  nav.top {
+    margin-bottom: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  nav.top a {
+    color: var(--fg);
+    text-decoration: none;
+    margin-right: 18px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 0.15s;
+  }
+
+  nav.top a:hover { border-bottom-color: var(--fg); }
+
+  section.cat {
+    margin-bottom: 40px;
+  }
+
+  .cat-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .cat-head .num {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  ul.list {
+    list-style: none;
+  }
+
+  ul.list li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 6px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+
+  ul.list .n {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    width: 38px;
+    flex-shrink: 0;
+  }
+
+  ul.list a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 0.15s, opacity 0.15s;
+  }
+
+  ul.list a:hover { border-bottom-color: var(--fg); }
+
+  ul.list .desc {
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    margin-left: auto;
+  }
+
+  ul.list li.disabled a {
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  ul.list li.disabled a::after {
+    content: ' ·  coming soon';
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  footer {
+    max-width: 720px;
+    margin: 80px auto 0;
+    width: 100%;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .socials {
+    display: flex;
+    gap: 14px;
+  }
+
+  .socials a {
+    color: var(--fg);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .socials a:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 48px 24px 32px; }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 22px; }
+    ul.list .desc { display: none; }
+    footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="id">// 32351697</div>
+      <h1>shota ueyama</h1>
+      <div class="role">慶應義塾大学 法学部政治学科 / 株式会社Wanderlust</div>
+    </header>
+
+    <nav class="top">
+      <a href="./index.html">home</a>
+      <a href="./personal/profile.html">profile</a>
+      <a href="#personal">personal</a>
+      <a href="#research">research</a>
+    </nav>
+
+    <section class="cat" id="personal">
+      <div class="cat-head"><span class="num">010</span><span>personal</span></div>
+      <ul class="list">
+        <li><span class="n">011</span><a href="./personal/profile.html">profile</a><span class="desc">自己紹介・経歴・人生史</span></li>
+        <li class="disabled"><span class="n">012</span><a>health</a><span class="desc">身体・トレーニングの記録</span></li>
+        <li class="disabled"><span class="n">013</span><a>travel</a><span class="desc">渡航・旅行記録</span></li>
+        <li class="disabled"><span class="n">014</span><a>book</a><span class="desc">読書ログ・書評</span></li>
+        <li class="disabled"><span class="n">015</span><a>kpop</a><span class="desc">TWICE / K-POPオタ活</span></li>
+      </ul>
+    </section>
+
+    <section class="cat" id="research">
+      <div class="cat-head"><span class="num">020</span><span>research</span></div>
+      <ul class="list">
+        <li class="disabled"><span class="n">021</span><a>geo-history</a><span class="desc">地政学・歴史リサーチ</span></li>
+        <li class="disabled"><span class="n">022</span><a>legend</a><span class="desc">偉人・人物分析</span></li>
+        <li class="disabled"><span class="n">023</span><a>startup</a><span class="desc">スタートアップ・企業分析</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    <div>© 2026 shota ueyama</div>
+    <div class="socials">
+      <a href="https://x.com/shota122937" target="_blank" rel="noopener">X</a>
+      <a href="https://www.facebook.com/profile.php?id=100052666599136" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </footer>
+</body>
+</html>
