@@ -227,6 +227,92 @@
     line-height: 1.55;
   }
 
+  /* album */
+  .album-stage {
+    margin-bottom: 48px;
+  }
+
+  .album-stage:last-child { margin-bottom: 0; }
+
+  .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stage-head .stage-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .stage-head .stage-ttl {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .stage-head .stage-en {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-left: auto;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+  figure.shot {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    background: #f0f0f0;
+    aspect-ratio: 4 / 5;
+  }
+
+  figure.shot.wide { aspect-ratio: 4 / 3; }
+  figure.shot.tall { aspect-ratio: 3 / 4; }
+  figure.shot.square { aspect-ratio: 1 / 1; }
+
+  figure.shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(8%);
+    transition: filter 0.4s, transform 0.5s;
+  }
+
+  figure.shot:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.03);
+  }
+
+  figure.shot figcaption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #fff;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  figure.shot:hover figcaption { opacity: 1; }
+
   /* tags */
   .tags {
     display: flex;
@@ -274,6 +360,9 @@
     .facts { grid-template-columns: 1fr; row-gap: 4px; }
     .facts dt { padding-top: 10px; }
     .values { grid-template-columns: 1fr; }
+    .grid, .grid.cols-2 { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .stage-head { flex-wrap: wrap; }
+    .stage-head .stage-en { margin-left: 0; flex-basis: 100%; }
     footer { flex-direction: column; gap: 16px; align-items: flex-start; }
   }
 </style>
@@ -405,6 +494,105 @@
           <div class="body">"最強のナンバー2" を人生のモットーに、1日14時間の泊まり込み稼働で修行中。話の冗長性を削り、構造的に物事を抽出して話す力を磨く日々。</div>
         </li>
       </ol>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>album</h2>
+
+      <div class="album-stage">
+        <div class="stage-head">
+          <span class="stage-num">01</span>
+          <span class="stage-ttl">幼少期</span>
+          <span class="stage-en">childhood · 0–6 yrs</span>
+        </div>
+        <div class="grid cols-2">
+          <figure class="shot wide"><img src="photos/childhood-kidzania.jpg" alt="幼少期 キッザニア"><figcaption>キッザニア / 5 yrs</figcaption></figure>
+          <figure class="shot wide"><img src="photos/elementary-portrait.jpg" alt="小学校に上がる頃"><figcaption>portrait</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="album-stage">
+        <div class="stage-head">
+          <span class="stage-num">02</span>
+          <span class="stage-ttl">小学校</span>
+          <span class="stage-en">elementary · 杉並区立天沼小学校</span>
+        </div>
+        <div class="grid">
+          <figure class="shot"><img src="photos/elementary-sato-teacher.jpg" alt="佐藤龍太先生との2ショット"><figcaption>佐藤龍太先生と</figcaption></figure>
+          <figure class="shot"><img src="photos/elementary-baseball-team.jpg" alt="小4 野球部同期"><figcaption>小4 / ポルテ野球部</figcaption></figure>
+          <figure class="shot"><img src="photos/elementary-yusei.jpg" alt="少年野球 優成との2ショット"><figcaption>仲井優成と</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="album-stage">
+        <div class="stage-head">
+          <span class="stage-num">03</span>
+          <span class="stage-ttl">中学校</span>
+          <span class="stage-en">middle school · 明治大学付属明治中学</span>
+        </div>
+        <div class="grid">
+          <figure class="shot"><img src="photos/middle-grade1.jpg" alt="中1"><figcaption>中1 / 学年リーダー</figcaption></figure>
+          <figure class="shot"><img src="photos/middle-grade2.jpg" alt="中2"><figcaption>中2 / 腰椎分離症</figcaption></figure>
+          <figure class="shot"><img src="photos/middle-grade3.jpg" alt="中3"><figcaption>中3 / 副主将</figcaption></figure>
+          <figure class="shot"><img src="photos/middle-catcher.jpg" alt="中学キャッチャー"><figcaption>キャッチャー</figcaption></figure>
+          <figure class="shot"><img src="photos/middle-sports-day.jpg" alt="中学3年 体育祭"><figcaption>体育祭 / クラス副主将</figcaption></figure>
+          <figure class="shot"><img src="photos/middle-school-hp.jpg" alt="15歳 学校HP掲載"><figcaption>15 yrs / 学校HP掲載</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="album-stage">
+        <div class="stage-head">
+          <span class="stage-num">04</span>
+          <span class="stage-ttl">高校</span>
+          <span class="stage-en">high school · 明治大学付属明治高校</span>
+        </div>
+        <div class="grid">
+          <figure class="shot"><img src="photos/high-grade1.jpg" alt="高1"><figcaption>高1</figcaption></figure>
+          <figure class="shot"><img src="photos/high-grade2.jpg" alt="高2"><figcaption>高2 / 野球部 副主将</figcaption></figure>
+          <figure class="shot"><img src="photos/high-grade3.jpg" alt="高3"><figcaption>高3 / AO入試</figcaption></figure>
+          <figure class="shot"><img src="photos/high-baseball.jpg" alt="高校野球"><figcaption>高校野球部</figcaption></figure>
+          <figure class="shot"><img src="photos/high-class-friends.jpg" alt="高1 D組の仲良いメンツ"><figcaption>高1 D組メンバー</figcaption></figure>
+          <figure class="shot"><img src="photos/high-twice-sana.jpg" alt="AO入試で使用 オタ活写真"><figcaption>AO入試 / TWICEオタ活</figcaption></figure>
+          <figure class="shot wide"><img src="photos/high-korea-activity.jpg" alt="18歳 韓国活動"><figcaption>18 yrs / 日韓活動</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="album-stage">
+        <div class="stage-head">
+          <span class="stage-num">05</span>
+          <span class="stage-ttl">大学</span>
+          <span class="stage-en">university · 慶應義塾大学 法学部政治学科</span>
+        </div>
+        <div class="grid">
+          <figure class="shot"><img src="photos/univ-knock.jpg" alt="KNOCK"><figcaption>KNOCK / 副サークル長</figcaption></figure>
+          <figure class="shot"><img src="photos/univ-knock-overseas.jpg" alt="KNOCK 海外渡航"><figcaption>KNOCK 海外渡航 / 韓国</figcaption></figure>
+          <figure class="shot"><img src="photos/univ-niseko.jpg" alt="ニセコ留学"><figcaption>大1 / ニセコ留学</figcaption></figure>
+          <figure class="shot"><img src="photos/univ-baseball.jpg" alt="リコタイ野球部"><figcaption>リコタイ野球部</figcaption></figure>
+          <figure class="shot"><img src="photos/univ-torihada-intern.jpg" alt="TORIHADA インターン"><figcaption>株式会社TORIHADA</figcaption></figure>
+          <figure class="shot"><img src="photos/univ-wanderlust.jpg" alt="Wanderlust"><figcaption>Wanderlust にJoin</figcaption></figure>
+          <figure class="shot wide"><img src="photos/univ-wanderlust-startup.jpg" alt="東大松尾研発スタートアップ記念写真"><figcaption>20 yrs / 東大松尾研発スタートアップ</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="album-stage">
+        <div class="stage-head">
+          <span class="stage-num">06</span>
+          <span class="stage-ttl">旅行</span>
+          <span class="stage-en">travel · 20+ countries</span>
+        </div>
+        <div class="grid">
+          <figure class="shot"><img src="photos/travel-us.jpg" alt="アメリカ"><figcaption>🇺🇸 USA / 19 yrs</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-sf.jpg" alt="サンフランシスコ"><figcaption>🇺🇸 San Francisco</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-vancouver.jpg" alt="バンクーバー"><figcaption>🇨🇦 Vancouver</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-southeast-asia.jpg" alt="東南アジア"><figcaption>🇹🇭🇰🇭🇻🇳 SE Asia</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-cambodia.jpg" alt="カンボジア"><figcaption>🇰🇭 Angkor Wat</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-china.jpg" alt="中国"><figcaption>🇨🇳 China</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-dubai.jpg" alt="ドバイ"><figcaption>🇦🇪 Dubai</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-egypt.jpg" alt="エジプト"><figcaption>🇪🇬 Egypt</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-europe.jpg" alt="ヨーロッパ"><figcaption>🇪🇺 Europe</figcaption></figure>
+          <figure class="shot"><img src="photos/travel-india.jpg" alt="インド"><figcaption>🇮🇳 India</figcaption></figure>
+        </div>
+      </div>
     </section>
 
     <section>
