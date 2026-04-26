@@ -236,6 +236,127 @@
     line-height: 1.55;
   }
 
+  /* favorites */
+  .fav-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
+    margin-top: 8px;
+  }
+
+  .fav-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .fav-en {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+
+  ul.fav-list {
+    list-style: none;
+  }
+
+  ul.fav-list li {
+    padding: 6px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  ul.fav-list .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fg);
+    flex-shrink: 0;
+  }
+
+  ul.fav-list .dot.like { background: #0a0a0a; }
+
+  ul.fav-list .dot.avoid {
+    background: transparent;
+    border: 1px solid #999;
+  }
+
+  /* key persons */
+  ol.people {
+    list-style: none;
+    counter-reset: person;
+    margin-top: 16px;
+  }
+
+  ol.people li {
+    counter-increment: person;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    padding-left: 44px;
+  }
+
+  ol.people li::before {
+    content: counter(person, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  ol.people li:last-child { border-bottom: none; }
+
+  .person-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .person-name {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .person-en {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .person-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .person-body {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.7;
+  }
+
   /* career */
   ol.career {
     list-style: none;
@@ -512,6 +633,7 @@
     .facts { grid-template-columns: 1fr; row-gap: 4px; }
     .facts dt { padding-top: 10px; }
     .values { grid-template-columns: 1fr; }
+    .fav-grid { grid-template-columns: 1fr; gap: 24px; }
     .grid, .grid.cols-2 { grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .stage-head { flex-wrap: wrap; }
     .stage-head .stage-en { margin-left: 0; flex-basis: 100%; }
@@ -583,7 +705,9 @@
     <section>
       <h2><span class="num">▸</span>facts</h2>
       <dl class="facts">
-        <dt>born</dt><dd>2004.11.30 / 東京</dd>
+        <dt>born</dt><dd>2004.11.30 / 東京・都立家政駅（東京衛生病院）</dd>
+        <dt>hometown</dt><dd>実家: 荻窪 / 現住: 九段下（1K・シェアオフィス兼用）</dd>
+        <dt>family</dt><dd>父（姉・妹あり）／ 母（兄・弟あり）／ 翔太は第一子（流産した姉が一人）</dd>
         <dt>current</dt><dd>慶應義塾大学 法学部政治学科（学籍番号 32351697）</dd>
         <dt>company</dt><dd>株式会社Wanderlust — 次期COO候補</dd>
         <dt>activity</dt><dd>KNOCK（慶應 国際関係会 日韓プロジェクト）</dd>
@@ -623,6 +747,83 @@
           <div class="t">逆張り志向 / 異質でありたい</div>
         </div>
       </div>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>favorites</h2>
+      <div class="fav-grid">
+        <div class="fav-col">
+          <div class="fav-head">趣味 <span class="fav-en">hobbies</span></div>
+          <ul class="fav-list">
+            <li><span class="dot"></span>野球（生粋のヤクルトファン）</li>
+            <li><span class="dot"></span>ゴルフ</li>
+            <li><span class="dot"></span>ポーカー</li>
+            <li><span class="dot"></span>TWICE（サナ推し）</li>
+          </ul>
+        </div>
+        <div class="fav-col">
+          <div class="fav-head">好きな食べ物 <span class="fav-en">love</span></div>
+          <ul class="fav-list">
+            <li><span class="dot like"></span>さつまいも</li>
+            <li><span class="dot like"></span>かぼちゃ</li>
+            <li><span class="dot like"></span>しゃけ（サーモン）</li>
+          </ul>
+          <div class="fav-head" style="margin-top:24px;">苦手な食べ物 <span class="fav-en">avoid</span></div>
+          <ul class="fav-list">
+            <li><span class="dot avoid"></span>アルコール（アレルギー）</li>
+            <li><span class="dot avoid"></span>貝類</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">▸</span>key persons</h2>
+      <p>翔太の人生に大きな影響を与え続けている人たち。</p>
+      <ol class="people">
+        <li>
+          <div class="person-head">
+            <span class="person-name">石原 優成 <span class="person-en">Yusei Ishihara</span></span>
+            <span class="person-tag">一番の親友</span>
+          </div>
+          <div class="person-body">小中学校の野球部、高校も同じ。家族ぐるみで仲が良く、お母様 Makiko さん・妹の Mei さんとも親交が深い。現在は伊藤忠商事に勤務。</div>
+        </li>
+        <li>
+          <div class="person-head">
+            <span class="person-name">前田 康太 <span class="person-en">Kota Maeda</span></span>
+            <span class="person-tag">高1からの親友</span>
+          </div>
+          <div class="person-body">小学校の塾・中高大すべてが同じ、荻窪出身の一人っ子。高校1年のクラスメンバーで、今でも定期的に電話する数少ない友人。</div>
+        </li>
+        <li>
+          <div class="person-head">
+            <span class="person-name">田中 怜生 <span class="person-en">Reo Tanaka</span></span>
+            <span class="person-tag">高校野球部 / Wanderlust 同士</span>
+          </div>
+          <div class="person-body">高校野球部の同期、川崎在住・弟あり。Wanderlust に翔太が誘い、一緒に1年間休学した盟友。エンジニアリングと金融に強い。</div>
+        </li>
+        <li>
+          <div class="person-head">
+            <span class="person-name">久保田 翔己 <span class="person-en">Shoki Kubota</span></span>
+            <span class="person-tag">KBC同期 / 同居人</span>
+          </div>
+          <div class="person-body">慶應義塾高校野球部出身、笹塚出身の4人兄弟末っ子。大学入学後、起業サークル KBC で出会う。GMOコネクトのインターン、Wanderlust への参画もすべて翔己さんの紹介。二人で起業を志した時期もあり、現在は1Kで一緒に暮らしている。</div>
+        </li>
+        <li>
+          <div class="person-head">
+            <span class="person-name">岸 正太郎 <span class="person-en">Shotaro Kishi</span></span>
+            <span class="person-tag">GMO・Wanderlust 同期</span>
+          </div>
+          <div class="person-body">吉祥寺出身・弟あり。大学1年の GMOコネクトインターンで翔己さんの紹介で出会う。休学して Wanderlust で営業も担当。現在は起業中。元々、岸さん・優成さん・翔太・もう1人の母親同士で「犬会」を定期開催しており、このタイミングで偶然再会した。</div>
+        </li>
+        <li>
+          <div class="person-head">
+            <span class="person-name">西川 響 <span class="person-en">Kyo Nishikawa</span></span>
+            <span class="person-tag">Wanderlust CEO / 恩師</span>
+          </div>
+          <div class="person-body">武蔵小金井出身、国分寺高校卒。兄と妹あり。10兆円企業を作り上げる起業家。翔太のビジネス・海外旅行・ポーカーの基礎土台を作り上げてくれた恩師。</div>
+        </li>
+      </ol>
     </section>
 
     <section>
@@ -770,6 +971,7 @@
           <figure class="shot"><img src="photos/univ-knock-overseas.jpg" alt="KNOCK 海外渡航"><figcaption>KNOCK 海外渡航 / 韓国</figcaption></figure>
           <figure class="shot"><img src="photos/univ-niseko.jpg" alt="ニセコ留学"><figcaption>大1 / ニセコ留学</figcaption></figure>
           <figure class="shot"><img src="photos/univ-baseball.jpg" alt="リコタイ野球部"><figcaption>リコタイ野球部</figcaption></figure>
+          <figure class="shot"><img src="photos/univ-golf.jpg" alt="ゴルフ with ミッシー / みくな"><figcaption>2024.08 / ゴルフ with ミッシー・みくな</figcaption></figure>
           <figure class="shot"><img src="photos/univ-torihada-intern.jpg" alt="TORIHADA インターン"><figcaption>株式会社TORIHADA</figcaption></figure>
           <figure class="shot"><img src="photos/univ-wanderlust.jpg" alt="Wanderlust"><figcaption>Wanderlust にJoin</figcaption></figure>
           <figure class="shot wide"><img src="photos/univ-wanderlust-startup.jpg" alt="東大松尾研発スタートアップ記念写真"><figcaption>20 yrs / 東大松尾研発スタートアップ</figcaption></figure>
