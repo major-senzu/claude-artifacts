@@ -227,6 +227,118 @@
     line-height: 1.55;
   }
 
+  /* career */
+  ol.career {
+    list-style: none;
+  }
+
+  ol.career li {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  ol.career li:last-child { border-bottom: none; }
+
+  ol.career .period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  ol.career .company {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  ol.career .role-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    letter-spacing: 0.04em;
+  }
+
+  ol.career .desc {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  ol.career .desc a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--fg);
+    padding-bottom: 1px;
+  }
+
+  ol.career .bullets {
+    list-style: none;
+    margin-top: 4px;
+  }
+
+  ol.career .bullets li {
+    padding: 2px 0;
+    border-bottom: none;
+    position: relative;
+    padding-left: 14px;
+  }
+
+  ol.career .bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--muted);
+  }
+
+  /* world map */
+  .map-wrap {
+    margin: 20px 0 16px;
+    background: #fafafa;
+    border: 1px solid var(--line);
+    padding: 12px;
+    overflow: hidden;
+  }
+
+  .map-wrap svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .map-wrap .country {
+    fill: #ececec;
+    stroke: #fff;
+    stroke-width: 0.4;
+  }
+
+  .map-wrap .pin {
+    fill: var(--fg);
+    stroke: #fff;
+    stroke-width: 1.5;
+    transition: r 0.2s, fill 0.2s;
+    cursor: pointer;
+  }
+
+  .map-wrap .pin:hover { fill: #ff3b30; r: 6; }
+
+  .map-wrap .legend {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    text-align: right;
+    letter-spacing: 0.04em;
+  }
+
   /* album */
   .album-stage {
     margin-bottom: 48px;
@@ -276,8 +388,11 @@
     margin: 0;
     position: relative;
     overflow: hidden;
-    background: #f0f0f0;
+    background: #f4f4f4;
     aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   figure.shot.wide { aspect-ratio: 4 / 3; }
@@ -287,7 +402,7 @@
   figure.shot img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     filter: grayscale(8%);
     transition: filter 0.4s, transform 0.5s;
@@ -295,7 +410,7 @@
 
   figure.shot:hover img {
     filter: grayscale(0%);
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
   figure.shot figcaption {
@@ -451,6 +566,32 @@
     </section>
 
     <section>
+      <h2><span class="num">▸</span>career</h2>
+      <ol class="career">
+        <li>
+          <div class="period">2024.09 — present</div>
+          <div class="company">株式会社 Wanderlust <span class="role-tag">Biz PM / 次期COO候補</span></div>
+          <div class="desc">生成AI / RAGコンサルティング会社にフルコミット。月270時間稼働。Engineer → Sales → CoS（経営室秘書） → Biz PM と役割を横断的に経験。エンタープライズ向けRAG構築・PoC設計・組織立ち上げを担当。</div>
+        </li>
+        <li>
+          <div class="period">2024.01 — 2024.08</div>
+          <div class="company">株式会社 TORIHADA <span class="role-tag">SEO / Content</span></div>
+          <div class="desc">TikTokマーケティング会社にてインターン。SEO記事の企画・執筆を担当。<a href="https://www.torihada.co.jp/media/2197/" target="_blank" rel="noopener">執筆記事の例 ↗</a></div>
+        </li>
+        <li>
+          <div class="period">2023.06 — 2023.12</div>
+          <div class="company">GMOコネクト <span class="role-tag">Intern</span></div>
+          <div class="desc">
+            <ul class="bullets">
+              <li>上場企業役員食事会に週1で参加し、経営層との直接対話を経験</li>
+              <li>社長インタビュー記事をまとめるオウンドメディアの立ち上げ・運営</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
       <h2><span class="num">▸</span>life timeline</h2>
       <ol class="timeline">
         <li>
@@ -476,12 +617,12 @@
         <li>
           <div class="yr">2023 — 慶應義塾大学 法学部政治学科</div>
           <div class="ttl">AO入試で合格・入学</div>
-          <div class="body">志望理由書に「TWICEのサナ」の名前を明記。SFCには「アイドルグループを作り、韓国側のマーケターとして日韓の架け橋になる」と提出。インカレ野球サークル / 日韓サークルKNOCK（企画部長・副サークル長）/ ゴルフ部 / 企業サークルなど多方面で活動。</div>
+          <div class="body">志望理由書に「TWICEのサナ」の名前を明記。SFCには「アイドルグループを作り、韓国側のマーケターとして日韓の架け橋になる」と提出。インカレ野球サークル / 日韓サークルKNOCK（企画部長・副サークル長）/ ゴルフ部 / 起業サークルKBCなど多方面で活動。</div>
         </li>
         <li>
           <div class="yr">2024.09</div>
           <div class="ttl">Wanderlust にJoin、大学を休学</div>
-          <div class="body">起業サークル KBC で出会った久保田翔己さんの紹介で、西川響さんと西原薫さんが創業した株式会社Wanderlustに出会う。Engineer → Sales → CoS（経営室秘書）→ Biz PM と役割を変えながら成長。インド人エンジニアと3段ベッド×6台の共同生活も経験。</div>
+          <div class="body">起業サークル KBC で出会った久保田翔己さんの紹介で、西川響さんと西原薫さんが創業した株式会社Wanderlustに出会う。月270時間労働でフルコミット。Engineer → Sales → CoS（経営室秘書）→ Biz PM と役割を変えながら成長。インド人エンジニアと3段ベッド×6台の共同生活も経験。</div>
         </li>
         <li>
           <div class="yr">2025.11 — 2026.03</div>
@@ -598,6 +739,49 @@
     <section>
       <h2><span class="num">▸</span>travel log</h2>
       <p>これまで20カ国以上を訪問。Wanderlustでの活動の中で、世界中を旅しながら働くスタイルを実践している。</p>
+
+      <div class="map-wrap">
+        <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <!-- continents (rough silhouettes) -->
+          <path class="country" d="M 110,90 L 140,75 L 175,60 L 230,55 L 285,68 L 320,85 L 335,115 L 330,150 L 310,175 L 285,195 L 260,215 L 225,225 L 190,220 L 155,205 L 130,180 L 115,150 L 108,120 Z" />
+          <path class="country" d="M 332,50 L 365,42 L 385,60 L 380,90 L 355,98 L 332,82 Z" />
+          <path class="country" d="M 245,255 L 280,245 L 310,260 L 320,295 L 318,335 L 302,375 L 282,410 L 262,428 L 245,425 L 235,395 L 232,345 L 238,295 Z" />
+          <path class="country" d="M 470,95 L 510,85 L 555,82 L 595,95 L 605,120 L 585,145 L 555,150 L 515,148 L 480,138 L 466,115 Z" />
+          <path class="country" d="M 520,170 L 575,162 L 620,168 L 655,195 L 672,235 L 670,290 L 652,340 L 620,365 L 595,366 L 568,340 L 548,295 L 532,245 L 522,205 Z" />
+          <path class="country" d="M 590,95 L 660,80 L 740,75 L 810,75 L 875,85 L 925,108 L 945,140 L 935,178 L 905,205 L 865,222 L 815,232 L 765,232 L 715,222 L 675,210 L 640,194 L 612,170 L 595,140 Z" />
+          <path class="country" d="M 700,180 L 730,180 L 738,210 L 722,242 L 706,228 Z" />
+          <path class="country" d="M 770,252 L 830,250 L 855,262 L 825,278 L 778,272 Z" />
+          <path class="country" d="M 870,135 L 905,142 L 910,168 L 880,172 Z" />
+          <path class="country" d="M 825,318 L 905,312 L 938,335 L 920,368 L 870,378 L 828,360 L 818,338 Z" />
+
+          <!-- pins: visited countries -->
+          <circle class="pin" cx="160" cy="145" r="4.5"><title>San Francisco, USA</title></circle>
+          <circle class="pin" cx="172" cy="156" r="4.5"><title>Los Angeles, USA</title></circle>
+          <circle class="pin" cx="158" cy="113" r="4.5"><title>Vancouver, Canada</title></circle>
+          <circle class="pin" cx="789" cy="213" r="4.5"><title>Cambodia</title></circle>
+          <circle class="pin" cx="780" cy="206" r="4.5"><title>Thailand</title></circle>
+          <circle class="pin" cx="797" cy="215" r="4.5"><title>Vietnam</title></circle>
+          <circle class="pin" cx="853" cy="146" r="4.5"><title>Korea</title></circle>
+          <circle class="pin" cx="823" cy="139" r="4.5"><title>China</title></circle>
+          <circle class="pin" cx="783" cy="241" r="4.5"><title>Malaysia</title></circle>
+          <circle class="pin" cx="633" cy="168" r="4.5"><title>Kuwait</title></circle>
+          <circle class="pin" cx="587" cy="167" r="4.5"><title>Egypt</title></circle>
+          <circle class="pin" cx="630" cy="181" r="4.5"><title>Saudi Arabia</title></circle>
+          <circle class="pin" cx="654" cy="180" r="4.5"><title>UAE / Dubai</title></circle>
+          <circle class="pin" cx="836" cy="209" r="4.5"><title>Philippines</title></circle>
+          <circle class="pin" cx="715" cy="171" r="4.5"><title>India</title></circle>
+          <circle class="pin" cx="581" cy="136" r="4.5"><title>Türkiye</title></circle>
+          <circle class="pin" cx="537" cy="104" r="4.5"><title>Germany</title></circle>
+          <circle class="pin" cx="535" cy="135" r="4.5"><title>Italy</title></circle>
+          <circle class="pin" cx="500" cy="107" r="4.5"><title>UK</title></circle>
+          <circle class="pin" cx="490" cy="138" r="4.5"><title>Spain</title></circle>
+          <circle class="pin" cx="535" cy="95" r="4.5"><title>Denmark</title></circle>
+          <!-- home -->
+          <circle class="pin" cx="888" cy="151" r="6" style="fill:#ff3b30"><title>Tokyo, Japan (home)</title></circle>
+        </svg>
+        <div class="legend">● 訪問済み · <span style="color:#ff3b30">●</span> Tokyo (home)</div>
+      </div>
+
       <div class="tags">
         <span>🇺🇸 USA</span>
         <span>🇨🇦 Canada</span>
