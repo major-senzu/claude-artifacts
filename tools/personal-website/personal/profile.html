@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>profile / shota ueyama</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
   :root {
     --bg: #ffffff;
@@ -28,7 +30,7 @@
 
   body {
     min-height: 100vh;
-    padding: 64px 48px 48px;
+    padding: 32px 48px 48px;
   }
 
   .wrap {
@@ -299,44 +301,62 @@
     color: var(--muted);
   }
 
-  /* world map */
+  /* world map (leaflet + OSM) */
   .map-wrap {
     margin: 20px 0 16px;
     background: #fafafa;
     border: 1px solid var(--line);
-    padding: 12px;
+    padding: 6px;
     overflow: hidden;
   }
 
-  .map-wrap svg {
+  #travel-map {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 480px;
+    background: #f0f0f0;
   }
-
-  .map-wrap .country {
-    fill: #ececec;
-    stroke: #fff;
-    stroke-width: 0.4;
-  }
-
-  .map-wrap .pin {
-    fill: var(--fg);
-    stroke: #fff;
-    stroke-width: 1.5;
-    transition: r 0.2s, fill 0.2s;
-    cursor: pointer;
-  }
-
-  .map-wrap .pin:hover { fill: #ff3b30; r: 6; }
 
   .map-wrap .legend {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--muted);
-    margin-top: 8px;
+    margin-top: 10px;
+    padding: 0 6px 4px;
     text-align: right;
     letter-spacing: 0.04em;
+  }
+
+  /* leaflet pin styling */
+  .travel-pin span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #0a0a0a;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+    transition: transform 0.15s;
+  }
+
+  .travel-pin:hover span {
+    transform: scale(1.4);
+    background: #ff3b30;
+  }
+
+  .travel-pin.home span {
+    width: 16px;
+    height: 16px;
+    background: #ff3b30;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 0 12px rgba(255,59,48,0.5);
+  }
+
+  .leaflet-popup-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    #travel-map { height: 360px; }
   }
 
   /* album */
@@ -483,7 +503,30 @@
 </style>
 </head>
 <body>
-  <div class="wrap">
+
+  <header class="topbar">
+    <a href="../index.html" class="logo">shota</a>
+    <button class="menu-toggle" aria-label="open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="drawer-overlay"></div>
+  <aside class="drawer">
+    <a href="../index.html" class="home-link">↑ home</a>
+    <div class="cat-label">PERSONAL</div>
+    <a href="./profile.html" class="nav-link">profile</a>
+    <a class="nav-link disabled">health</a>
+    <a class="nav-link disabled">travel</a>
+    <a class="nav-link disabled">book</a>
+    <a class="nav-link disabled">kpop</a>
+    <div class="cat-label">RESEARCH</div>
+    <a class="nav-link disabled">geo-history</a>
+    <a class="nav-link disabled">legend</a>
+    <a class="nav-link disabled">startup</a>
+  </aside>
+
+  <main class="wrap">
     <div class="crumb">
       <a href="../index.html">home</a><span class="sep">/</span>
       <a href="../index.html#personal">personal</a><span class="sep">/</span>
@@ -741,45 +784,8 @@
       <p>これまで20カ国以上を訪問。Wanderlustでの活動の中で、世界中を旅しながら働くスタイルを実践している。</p>
 
       <div class="map-wrap">
-        <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-          <!-- continents (rough silhouettes) -->
-          <path class="country" d="M 110,90 L 140,75 L 175,60 L 230,55 L 285,68 L 320,85 L 335,115 L 330,150 L 310,175 L 285,195 L 260,215 L 225,225 L 190,220 L 155,205 L 130,180 L 115,150 L 108,120 Z" />
-          <path class="country" d="M 332,50 L 365,42 L 385,60 L 380,90 L 355,98 L 332,82 Z" />
-          <path class="country" d="M 245,255 L 280,245 L 310,260 L 320,295 L 318,335 L 302,375 L 282,410 L 262,428 L 245,425 L 235,395 L 232,345 L 238,295 Z" />
-          <path class="country" d="M 470,95 L 510,85 L 555,82 L 595,95 L 605,120 L 585,145 L 555,150 L 515,148 L 480,138 L 466,115 Z" />
-          <path class="country" d="M 520,170 L 575,162 L 620,168 L 655,195 L 672,235 L 670,290 L 652,340 L 620,365 L 595,366 L 568,340 L 548,295 L 532,245 L 522,205 Z" />
-          <path class="country" d="M 590,95 L 660,80 L 740,75 L 810,75 L 875,85 L 925,108 L 945,140 L 935,178 L 905,205 L 865,222 L 815,232 L 765,232 L 715,222 L 675,210 L 640,194 L 612,170 L 595,140 Z" />
-          <path class="country" d="M 700,180 L 730,180 L 738,210 L 722,242 L 706,228 Z" />
-          <path class="country" d="M 770,252 L 830,250 L 855,262 L 825,278 L 778,272 Z" />
-          <path class="country" d="M 870,135 L 905,142 L 910,168 L 880,172 Z" />
-          <path class="country" d="M 825,318 L 905,312 L 938,335 L 920,368 L 870,378 L 828,360 L 818,338 Z" />
-
-          <!-- pins: visited countries -->
-          <circle class="pin" cx="160" cy="145" r="4.5"><title>San Francisco, USA</title></circle>
-          <circle class="pin" cx="172" cy="156" r="4.5"><title>Los Angeles, USA</title></circle>
-          <circle class="pin" cx="158" cy="113" r="4.5"><title>Vancouver, Canada</title></circle>
-          <circle class="pin" cx="789" cy="213" r="4.5"><title>Cambodia</title></circle>
-          <circle class="pin" cx="780" cy="206" r="4.5"><title>Thailand</title></circle>
-          <circle class="pin" cx="797" cy="215" r="4.5"><title>Vietnam</title></circle>
-          <circle class="pin" cx="853" cy="146" r="4.5"><title>Korea</title></circle>
-          <circle class="pin" cx="823" cy="139" r="4.5"><title>China</title></circle>
-          <circle class="pin" cx="783" cy="241" r="4.5"><title>Malaysia</title></circle>
-          <circle class="pin" cx="633" cy="168" r="4.5"><title>Kuwait</title></circle>
-          <circle class="pin" cx="587" cy="167" r="4.5"><title>Egypt</title></circle>
-          <circle class="pin" cx="630" cy="181" r="4.5"><title>Saudi Arabia</title></circle>
-          <circle class="pin" cx="654" cy="180" r="4.5"><title>UAE / Dubai</title></circle>
-          <circle class="pin" cx="836" cy="209" r="4.5"><title>Philippines</title></circle>
-          <circle class="pin" cx="715" cy="171" r="4.5"><title>India</title></circle>
-          <circle class="pin" cx="581" cy="136" r="4.5"><title>Türkiye</title></circle>
-          <circle class="pin" cx="537" cy="104" r="4.5"><title>Germany</title></circle>
-          <circle class="pin" cx="535" cy="135" r="4.5"><title>Italy</title></circle>
-          <circle class="pin" cx="500" cy="107" r="4.5"><title>UK</title></circle>
-          <circle class="pin" cx="490" cy="138" r="4.5"><title>Spain</title></circle>
-          <circle class="pin" cx="535" cy="95" r="4.5"><title>Denmark</title></circle>
-          <!-- home -->
-          <circle class="pin" cx="888" cy="151" r="6" style="fill:#ff3b30"><title>Tokyo, Japan (home)</title></circle>
-        </svg>
-        <div class="legend">● 訪問済み · <span style="color:#ff3b30">●</span> Tokyo (home)</div>
+        <div id="travel-map"></div>
+        <div class="legend">● 訪問済み · <span style="color:#ff3b30">●</span> Tokyo (home) · powered by OpenStreetMap</div>
       </div>
 
       <div class="tags">
@@ -811,13 +817,84 @@
       <p>仕事のご相談・お問い合わせは X / Facebook の DM までお気軽にどうぞ。</p>
     </section>
 
-    <footer>
-      <div>© 2026 shota ueyama · <a href="../index.html" style="color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);">back to home</a></div>
-      <div class="socials">
-        <a href="https://x.com/shota122937" target="_blank" rel="noopener">X</a>
-        <a href="https://www.facebook.com/profile.php?id=100052666599136" target="_blank" rel="noopener">Facebook</a>
-      </div>
-    </footer>
-  </div>
+  </main>
+
+  <footer class="bottombar">
+    <a href="https://x.com/shota122937" target="_blank" rel="noopener" aria-label="X">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=100052666599136" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073"/></svg>
+    </a>
+  </footer>
+
+  <script src="../assets/site.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    (function () {
+      var el = document.getElementById('travel-map');
+      if (!el || typeof L === 'undefined') return;
+
+      var map = L.map(el, {
+        center: [25, 50],
+        zoom: 2,
+        scrollWheelZoom: false,
+        attributionControl: true
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      var visited = [
+        [37.7749, -122.4194, 'San Francisco, USA'],
+        [34.0522, -118.2437, 'Los Angeles, USA'],
+        [36.1699, -115.1398, 'Las Vegas, USA'],
+        [49.2827, -123.1207, 'Vancouver, Canada'],
+        [13.3633, 103.8564, 'Siem Reap, Cambodia'],
+        [13.7563, 100.5018, 'Bangkok, Thailand'],
+        [10.8231, 106.6297, 'Ho Chi Minh, Vietnam'],
+        [37.5665, 126.9780, 'Seoul, Korea'],
+        [39.9042, 116.4074, 'Beijing, China'],
+        [3.1390, 101.6869, 'Kuala Lumpur, Malaysia'],
+        [29.3759, 47.9774, 'Kuwait City, Kuwait'],
+        [30.0444, 31.2357, 'Cairo, Egypt'],
+        [24.7136, 46.6753, 'Riyadh, Saudi Arabia'],
+        [25.2048, 55.2708, 'Dubai, UAE'],
+        [14.5995, 120.9842, 'Manila, Philippines'],
+        [28.6139, 77.2090, 'Delhi, India'],
+        [41.0082, 28.9784, 'Istanbul, Türkiye'],
+        [52.5200, 13.4050, 'Berlin, Germany'],
+        [41.9028, 12.4964, 'Rome, Italy'],
+        [51.5074, -0.1278, 'London, UK'],
+        [40.4168, -3.7038, 'Madrid, Spain'],
+        [55.6761, 12.5683, 'Copenhagen, Denmark']
+      ];
+
+      var pinIcon = L.divIcon({
+        className: 'travel-pin',
+        html: '<span></span>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6]
+      });
+
+      visited.forEach(function (p) {
+        L.marker([p[0], p[1]], { icon: pinIcon })
+          .addTo(map)
+          .bindPopup('<strong>' + p[2] + '</strong>');
+      });
+
+      var homeIcon = L.divIcon({
+        className: 'travel-pin home',
+        html: '<span></span>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8]
+      });
+      L.marker([35.6762, 139.6503], { icon: homeIcon })
+        .addTo(map)
+        .bindPopup('<strong>Tokyo, Japan</strong> — home');
+    })();
+  </script>
 </body>
 </html>
