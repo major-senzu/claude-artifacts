@@ -1,0 +1,6 @@
+.DS_Store
+
+# 配下のサブリポジトリ（各々独立したGitHubリポとして管理）
+shota-ueyama/
+shota-portal/
+wl-private-artifacts/
