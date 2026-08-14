@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>毎日の体重管理</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: { 50:'#eef7ff',100:'#d9edff',500:'#2f80ed',600:'#2568c4',700:'#1d509a' }
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif; }
+  .tab-active { color: #2f80ed; }
+  .tab-active svg { stroke: #2f80ed; }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+<div class="max-w-md mx-auto min-h-screen bg-slate-50 flex flex-col relative pb-20">
+
+  <!-- ヘッダー -->
+  <header class="bg-brand-500 text-white px-5 pt-6 pb-5 rounded-b-3xl shadow-md">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm opacity-80" id="today-date"></p>
+        <h1 class="text-xl font-bold mt-0.5">毎日の体重管理</h1>
+      </div>
+      <button id="btn-settings" class="p-2 rounded-full hover:bg-white/15 transition" aria-label="設定">
+        <i data-lucide="settings" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- サマリーカード -->
+    <div class="mt-4 grid grid-cols-3 gap-2">
+      <div class="bg-white/15 rounded-xl p-3 text-center">
+        <p class="text-xs opacity-80">現在</p>
+        <p class="text-lg font-bold"><span id="sum-current">--</span><span class="text-xs font-normal"> kg</span></p>
+      </div>
+      <div class="bg-white/15 rounded-xl p-3 text-center">
+        <p class="text-xs opacity-80">目標まで</p>
+        <p class="text-lg font-bold"><span id="sum-togoal">--</span><span class="text-xs font-normal"> kg</span></p>
+      </div>
+      <div class="bg-white/15 rounded-xl p-3 text-center">
+        <p class="text-xs opacity-80">BMI</p>
+        <p class="text-lg font-bold" id="sum-bmi">--</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 px-4 pt-4 space-y-4">
+
+    <!-- 記録タブ -->
+    <section id="view-record" class="space-y-4">
+
+      <!-- 入力カード -->
+      <div class="bg-white rounded-2xl shadow-sm p-4">
+        <h2 class="font-bold flex items-center gap-2 text-slate-700">
+          <i data-lucide="pen-line" class="w-4 h-4 text-brand-500"></i>今日の記録
+        </h2>
+        <div class="mt-3 flex items-end gap-3">
+          <div class="flex-1">
+            <label class="text-xs text-slate-500" for="input-weight">体重 (kg)</label>
+            <input id="input-weight" type="number" step="0.1" min="20" max="200" inputmode="decimal"
+              class="w-full mt-1 text-2xl font-bold border-b-2 border-slate-200 focus:border-brand-500 outline-none py-1 bg-transparent"
+              placeholder="65.0">
+          </div>
+          <div class="w-28">
+            <label class="text-xs text-slate-500" for="input-fat">体脂肪率 (%)</label>
+            <input id="input-fat" type="number" step="0.1" min="1" max="60" inputmode="decimal"
+              class="w-full mt-1 text-2xl font-bold border-b-2 border-slate-200 focus:border-brand-500 outline-none py-1 bg-transparent"
+              placeholder="任意">
+          </div>
+        </div>
+        <div class="mt-3">
+          <label class="text-xs text-slate-500" for="input-memo">メモ（任意）</label>
+          <input id="input-memo" type="text" maxlength="50"
+            class="w-full mt-1 text-sm border border-slate-200 rounded-lg px-3 py-2 focus:border-brand-500 outline-none"
+            placeholder="例: 夕食を控えめにした">
+        </div>
+        <button id="btn-save"
+          class="mt-4 w-full bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
+          <i data-lucide="check" class="w-5 h-5"></i>記録する
+        </button>
+        <p id="save-msg" class="text-center text-sm text-emerald-600 mt-2 hidden">保存しました ✓</p>
+      </div>
+
+      <!-- グラフカード -->
+      <div class="bg-white rounded-2xl shadow-sm p-4">
+        <div class="flex items-center justify-between">
+          <h2 class="font-bold flex items-center gap-2 text-slate-700">
+            <i data-lucide="line-chart" class="w-4 h-4 text-brand-500"></i>体重の推移
+          </h2>
+          <div class="flex gap-1 text-xs">
+            <button data-range="7" class="range-btn px-2.5 py-1 rounded-full bg-brand-500 text-white">7日</button>
+            <button data-range="30" class="range-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">30日</button>
+            <button data-range="90" class="range-btn px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">90日</button>
+          </div>
+        </div>
+        <canvas id="chart" class="w-full mt-3" height="180"></canvas>
+        <div class="flex justify-between text-xs text-slate-400 mt-1 px-1">
+          <span id="chart-start"></span><span id="chart-end"></span>
+        </div>
+      </div>
+
+      <!-- 週間の変化 -->
+      <div class="bg-white rounded-2xl shadow-sm p-4">
+        <h2 class="font-bold flex items-center gap-2 text-slate-700">
+          <i data-lucide="trending-down" class="w-4 h-4 text-brand-500"></i>変化
+        </h2>
+        <div class="mt-3 grid grid-cols-2 gap-3">
+          <div class="bg-slate-50 rounded-xl p-3">
+            <p class="text-xs text-slate-500">前日比</p>
+            <p class="text-lg font-bold mt-0.5" id="diff-day">--</p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-3">
+            <p class="text-xs text-slate-500">1週間前比</p>
+            <p class="text-lg font-bold mt-0.5" id="diff-week">--</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 履歴タブ -->
+    <section id="view-history" class="hidden">
+      <div class="bg-white rounded-2xl shadow-sm p-4">
+        <h2 class="font-bold flex items-center gap-2 text-slate-700">
+          <i data-lucide="history" class="w-4 h-4 text-brand-500"></i>記録の履歴
+        </h2>
+        <ul id="history-list" class="mt-2 divide-y divide-slate-100"></ul>
+        <p id="history-empty" class="text-sm text-slate-400 text-center py-6 hidden">まだ記録がありません</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 設定モーダル -->
+  <div id="modal-settings" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div class="absolute inset-0 bg-black/40" id="modal-backdrop"></div>
+    <div class="relative bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 pb-8">
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-lg">設定</h2>
+        <button id="btn-close-settings" class="p-1.5 rounded-full hover:bg-slate-100" aria-label="閉じる">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="mt-4 space-y-4">
+        <div>
+          <label class="text-sm text-slate-600" for="set-goal">目標体重 (kg)</label>
+          <input id="set-goal" type="number" step="0.1" min="20" max="200" inputmode="decimal"
+            class="w-full mt-1 border border-slate-200 rounded-lg px-3 py-2.5 focus:border-brand-500 outline-none text-lg font-bold">
+        </div>
+        <div>
+          <label class="text-sm text-slate-600" for="set-height">身長 (cm) — BMI計算に使用</label>
+          <input id="set-height" type="number" step="0.1" min="100" max="250" inputmode="decimal"
+            class="w-full mt-1 border border-slate-200 rounded-lg px-3 py-2.5 focus:border-brand-500 outline-none text-lg font-bold">
+        </div>
+        <button id="btn-save-settings"
+          class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 rounded-xl transition">保存する</button>
+        <button id="btn-reset-data"
+          class="w-full text-sm text-red-500 py-2">デモデータをリセット</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下部ナビ -->
+  <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-200 flex">
+    <button id="tab-record" class="tab-btn tab-active flex-1 py-3 flex flex-col items-center gap-0.5 text-xs text-slate-400">
+      <i data-lucide="pen-line" class="w-5 h-5"></i>記録
+    </button>
+    <button id="tab-history" class="tab-btn flex-1 py-3 flex flex-col items-center gap-0.5 text-xs text-slate-400">
+      <i data-lucide="history" class="w-5 h-5"></i>履歴
+    </button>
+  </nav>
+</div>
+
+<script>
+// ---------- ユーティリティ ----------
+const fmtDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const fmtDispDate = key => {
+  const [y,m,d] = key.split('-');
+  return `${Number(m)}/${Number(d)}`;
+};
+const STORAGE_KEY = 'weight-mock-records';
+const SETTINGS_KEY = 'weight-mock-settings';
+
+// ---------- 状態 ----------
+let records = [];   // {date:'YYYY-MM-DD', weight:Number, fat:Number|null, memo:String}
+let settings = { goal: 62.0, height: 170 };
+let chartRange = 7;
+
+// ---------- デモデータ生成 ----------
+function seedDemoData() {
+  const arr = [];
+  let w = 68.5;
+  for (let i = 89; i >= 1; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    // ゆるやかに減少するダミーデータ（欠測日もつくる）
+    w += (Math.random() - 0.55) * 0.3;
+    w = Math.round(w * 10) / 10;
+    if (Math.random() < 0.85) {
+      arr.push({
+        date: fmtDate(d),
+        weight: w,
+        fat: Math.round((22 + (w - 65) * 0.5 + Math.random()) * 10) / 10,
+        memo: ''
+      });
+    }
+  }
+  return arr;
+}
+
+// ---------- 永続化 ----------
+function load() {
+  try {
+    const r = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (Array.isArray(r) && r.length) records = r;
+    else { records = seedDemoData(); save(); }
+    const s = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    if (s && s.goal) settings = s;
+  } catch { records = seedDemoData(); }
+}
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
+
+// ---------- 記録操作 ----------
+function upsertRecord(rec) {
+  const idx = records.findIndex(r => r.date === rec.date);
+  if (idx >= 0) records[idx] = rec; else records.push(rec);
+  records.sort((a,b) => a.date.localeCompare(b.date));
+  save();
+}
+function deleteRecord(date) {
+  records = records.filter(r => r.date !== date);
+  save();
+  renderAll();
+}
+
+// ---------- サマリー ----------
+function latest() { return records.length ? records[records.length-1] : null; }
+
+function renderSummary() {
+  const cur = latest();
+  document.getElementById('sum-current').textContent = cur ? cur.weight.toFixed(1) : '--';
+  if (cur) {
+    const diff = cur.weight - settings.goal;
+    const el = document.getElementById('sum-togoal');
+    el.textContent = (diff > 0 ? '-' : '+') + Math.abs(diff).toFixed(1);
+    const h = settings.height / 100;
+    document.getElementById('sum-bmi').textContent = (cur.weight / (h*h)).toFixed(1);
+  } else {
+    document.getElementById('sum-togoal').textContent = '--';
+    document.getElementById('sum-bmi').textContent = '--';
+  }
+}
+
+function renderDiffs() {
+  const byDate = Object.fromEntries(records.map(r => [r.date, r.weight]));
+  const cur = latest();
+  const setDiff = (id, base) => {
+    const el = document.getElementById(id);
+    if (cur && base != null) {
+      const d = cur.weight - base;
+      const sign = d > 0 ? '+' : '';
+      el.textContent = `${sign}${d.toFixed(1)} kg`;
+      el.className = 'text-lg font-bold mt-0.5 ' + (d < 0 ? 'text-emerald-600' : d > 0 ? 'text-red-500' : 'text-slate-600');
+    } else { el.textContent = '--'; el.className = 'text-lg font-bold mt-0.5'; }
+  };
+  if (!cur) { setDiff('diff-day', null); setDiff('diff-week', null); return; }
+  const curDate = new Date(cur.date);
+  const find = daysAgo => {
+    const d = new Date(curDate); d.setDate(d.getDate() - daysAgo);
+    return byDate[fmtDate(d)] ?? null;
+  };
+  setDiff('diff-day', find(1));
+  setDiff('diff-week', find(7));
+}
+
+// ---------- グラフ（Canvas手描き） ----------
+function renderChart() {
+  const canvas = document.getElementById('chart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = canvas.clientWidth, cssH = 180;
+  canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - chartRange);
+  const data = records.filter(r => new Date(r.date) >= cutoff);
+
+  document.getElementById('chart-start').textContent = data.length ? fmtDispDate(data[0].date) : '';
+  document.getElementById('chart-end').textContent = data.length ? fmtDispDate(data[data.length-1].date) : '';
+
+  if (data.length < 2) {
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('データが不足しています', cssW/2, cssH/2);
+    return;
+  }
+
+  const pad = { l: 34, r: 8, t: 12, b: 8 };
+  const ws = data.map(r => r.weight);
+  let min = Math.min(...ws, settings.goal) - 0.5;
+  let max = Math.max(...ws, settings.goal) + 0.5;
+  const x = i => pad.l + (cssW - pad.l - pad.r) * i / (data.length - 1);
+  const y = w => pad.t + (cssH - pad.t - pad.b) * (1 - (w - min) / (max - min));
+
+  // Y軸グリッド
+  ctx.strokeStyle = '#e2e8f0'; ctx.fillStyle = '#94a3b8';
+  ctx.font = '10px sans-serif'; ctx.textAlign = 'right'; ctx.lineWidth = 1;
+  const steps = 4;
+  for (let i = 0; i <= steps; i++) {
+    const v = min + (max - min) * i / steps;
+    const yy = y(v);
+    ctx.beginPath(); ctx.moveTo(pad.l, yy); ctx.lineTo(cssW - pad.r, yy); ctx.stroke();
+    ctx.fillText(v.toFixed(1), pad.l - 5, yy + 3);
+  }
+
+  // 目標ライン
+  ctx.strokeStyle = '#f59e0b'; ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(pad.l, y(settings.goal)); ctx.lineTo(cssW - pad.r, y(settings.goal)); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#f59e0b'; ctx.textAlign = 'left';
+  ctx.fillText(`目標 ${settings.goal}`, pad.l + 2, y(settings.goal) - 4);
+
+  // エリア
+  const grad = ctx.createLinearGradient(0, pad.t, 0, cssH);
+  grad.addColorStop(0, 'rgba(47,128,237,0.25)');
+  grad.addColorStop(1, 'rgba(47,128,237,0)');
+  ctx.beginPath();
+  data.forEach((r,i) => i ? ctx.lineTo(x(i), y(r.weight)) : ctx.moveTo(x(0), y(r.weight)));
+  ctx.lineTo(x(data.length-1), cssH - pad.b); ctx.lineTo(x(0), cssH - pad.b); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+
+  // 折れ線
+  ctx.strokeStyle = '#2f80ed'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  data.forEach((r,i) => i ? ctx.lineTo(x(i), y(r.weight)) : ctx.moveTo(x(0), y(r.weight)));
+  ctx.stroke();
+
+  // 最新点
+  const li = data.length - 1;
+  ctx.fillStyle = '#2f80ed';
+  ctx.beginPath(); ctx.arc(x(li), y(data[li].weight), 4, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.beginPath(); ctx.arc(x(li), y(data[li].weight), 2, 0, Math.PI*2); ctx.fill();
+}
+
+// ---------- 履歴 ----------
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const empty = document.getElementById('history-empty');
+  list.innerHTML = '';
+  const items = [...records].reverse().slice(0, 60);
+  empty.classList.toggle('hidden', items.length > 0);
+  for (const r of items) {
+    const li = document.createElement('li');
+    li.className = 'py-3 flex items-center gap-3';
+    li.innerHTML = `
+      <div class="w-14 text-sm text-slate-500">${fmtDispDate(r.date)}</div>
+      <div class="flex-1">
+        <p class="font-bold">${r.weight.toFixed(1)} <span class="text-xs font-normal text-slate-400">kg</span>
+          ${r.fat ? `<span class="ml-2 text-xs text-slate-400">体脂肪 ${r.fat}%</span>` : ''}</p>
+        ${r.memo ? `<p class="text-xs text-slate-400 mt-0.5"></p>` : ''}
+      </div>
+      <button class="del-btn p-2 text-slate-300 hover:text-red-500" data-date="${r.date}" aria-label="削除">
+        <i data-lucide="trash-2" class="w-4 h-4"></i>
+      </button>`;
+    if (r.memo) li.querySelector('p.text-xs.text-slate-400.mt-0\\.5').textContent = r.memo;
+    list.appendChild(li);
+  }
+  list.querySelectorAll('.del-btn').forEach(b => b.addEventListener('click', () => {
+    if (confirm('この記録を削除しますか？')) deleteRecord(b.dataset.date);
+  }));
+  lucide.createIcons();
+}
+
+// ---------- 全描画 ----------
+function renderAll() {
+  renderSummary();
+  renderDiffs();
+  renderChart();
+  renderHistory();
+}
+
+// ---------- イベント ----------
+document.getElementById('btn-save').addEventListener('click', () => {
+  const w = parseFloat(document.getElementById('input-weight').value);
+  if (!w || w < 20 || w > 200) { alert('体重を正しく入力してください（20〜200kg）'); return; }
+  const fat = parseFloat(document.getElementById('input-fat').value) || null;
+  const memo = document.getElementById('input-memo').value.trim();
+  upsertRecord({ date: fmtDate(new Date()), weight: Math.round(w*10)/10, fat, memo });
+  const msg = document.getElementById('save-msg');
+  msg.classList.remove('hidden');
+  setTimeout(() => msg.classList.add('hidden'), 2000);
+  document.getElementById('input-weight').value = '';
+  document.getElementById('input-fat').value = '';
+  document.getElementById('input-memo').value = '';
+  renderAll();
+});
+
+document.querySelectorAll('.range-btn').forEach(b => b.addEventListener('click', () => {
+  chartRange = Number(b.dataset.range);
+  document.querySelectorAll('.range-btn').forEach(x => {
+    const active = x === b;
+    x.className = 'range-btn px-2.5 py-1 rounded-full ' + (active ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-500');
+  });
+  renderChart();
+}));
+
+// タブ切り替え
+function switchTab(tab) {
+  document.getElementById('view-record').classList.toggle('hidden', tab !== 'record');
+  document.getElementById('view-history').classList.toggle('hidden', tab !== 'history');
+  document.getElementById('tab-record').classList.toggle('tab-active', tab === 'record');
+  document.getElementById('tab-history').classList.toggle('tab-active', tab === 'history');
+  if (tab === 'record') renderChart();
+}
+document.getElementById('tab-record').addEventListener('click', () => switchTab('record'));
+document.getElementById('tab-history').addEventListener('click', () => switchTab('history'));
+
+// 設定モーダル
+const modal = document.getElementById('modal-settings');
+function openSettings() {
+  document.getElementById('set-goal').value = settings.goal;
+  document.getElementById('set-height').value = settings.height;
+  modal.classList.remove('hidden');
+}
+function closeSettings() { modal.classList.add('hidden'); }
+document.getElementById('btn-settings').addEventListener('click', openSettings);
+document.getElementById('btn-close-settings').addEventListener('click', closeSettings);
+document.getElementById('modal-backdrop').addEventListener('click', closeSettings);
+document.getElementById('btn-save-settings').addEventListener('click', () => {
+  const g = parseFloat(document.getElementById('set-goal').value);
+  const h = parseFloat(document.getElementById('set-height').value);
+  if (!g || g < 20 || g > 200) { alert('目標体重を正しく入力してください'); return; }
+  if (!h || h < 100 || h > 250) { alert('身長を正しく入力してください'); return; }
+  settings = { goal: Math.round(g*10)/10, height: Math.round(h*10)/10 };
+  save();
+  closeSettings();
+  renderAll();
+});
+document.getElementById('btn-reset-data').addEventListener('click', () => {
+  if (confirm('すべての記録を消去してデモデータを再生成します。よろしいですか？')) {
+    records = seedDemoData();
+    save();
+    closeSettings();
+    renderAll();
+  }
+});
+
+window.addEventListener('resize', renderChart);
+
+// ---------- 初期化 ----------
+const today = new Date();
+document.getElementById('today-date').textContent =
+  `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日 (${'日月火水木金土'[today.getDay()]})`;
+load();
+lucide.createIcons();
+renderAll();
+</script>
+</body>
+</html>
