@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1,000億ロードマップ</title>
+<style>
+  /* 白×灰のコンサル資料調（単色コミット・ダークモードなし） */
+  :root{
+    --bg:#ffffff; --ink:#1a1a1a; --ink-2:#4b4b4b; --ink-3:#8c8c8c;
+    --line:#dcdcdc; --rule:#1a1a1a; --track:#ececec;
+    --bar:#3d3d3d; --target:#000; --panel:#f6f6f4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.7;padding:36px 24px 56px;max-width:920px;margin:0 auto;font-feature-settings:"palt"}
+  a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink-3)}
+  a:hover{border-bottom-color:var(--ink)}
+  nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:26px;font-size:.75rem}
+  nav a{border:1px solid var(--line);border-radius:2px;padding:2px 11px;color:var(--ink-2);border-bottom:1px solid var(--line)}
+  nav a.on{background:var(--rule);color:#fff;border-color:var(--rule)}
+  header{margin-bottom:26px;border-bottom:3px double var(--rule);padding-bottom:18px}
+  h1{font-size:1.5rem;letter-spacing:.03em;font-weight:700}
+  .constant{color:var(--ink-2);font-size:.93rem;margin-top:8px;border-left:3px solid var(--rule);padding-left:12px}
+  .meta{color:var(--ink-3);font-size:.76rem;margin-top:10px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;margin:0 0 30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tile{padding:14px 16px 12px;border-right:1px solid var(--line)}
+  .tile:last-child{border-right:none}
+  .tile .k{font-size:.7rem;color:var(--ink-3);letter-spacing:.08em}
+  .tile .v{font-size:1.5rem;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tile .s{font-size:.72rem;color:var(--ink-2)}
+  section{border-top:2px solid var(--rule);padding:14px 0 8px;margin-bottom:30px}
+  h2{font-size:.92rem;letter-spacing:.06em;margin-bottom:2px}
+  .sub{font-size:.8rem;color:var(--ink-3);margin-bottom:16px}
+  .axis{display:grid;grid-template-columns:160px 1fr 96px;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .axis:last-of-type{border-bottom:none}
+  .axis .name{font-size:.88rem;font-weight:600}
+  .axis .name a{border-bottom:none}
+  .axis .name small{display:block;color:var(--ink-3);font-size:.68rem;font-weight:400}
+  .trackbar{position:relative;height:12px;background:var(--track)}
+  .fill{position:absolute;left:0;top:0;bottom:0;background:var(--bar);min-width:2px}
+  .tmark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--target)}
+  .grid5{position:absolute;top:0;bottom:0;width:1px;background:var(--bg)}
+  .lvl{font-size:.8rem;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+  .legend{display:flex;gap:18px;font-size:.72rem;color:var(--ink-2);margin-top:12px;flex-wrap:wrap}
+  .legend .sw{display:inline-block;width:14px;height:9px;background:var(--bar);vertical-align:0;margin-right:6px}
+  .legend .tg{display:inline-block;width:2px;height:12px;background:var(--target);vertical-align:-2px;margin-right:6px}
+  .warn{font-size:.76rem;color:var(--ink-3);margin-top:12px}
+  .lane{padding:11px 0;border-bottom:1px solid var(--line)}
+  .lane:last-child{border-bottom:none}
+  .lane .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .lane .t{font-size:.88rem;font-weight:600}
+  .lane .n{font-size:.78rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .pbar{height:7px;background:var(--track);margin-top:8px;position:relative}
+  .pbar .pf{position:absolute;left:0;top:0;bottom:0;background:var(--bar);min-width:2px}
+  .lane .st{font-size:.74rem;color:var(--ink-3);margin-top:5px}
+  ul.log{list-style:none}
+  ul.log li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.86rem;display:flex;gap:14px}
+  ul.log li:last-child{border-bottom:none}
+  ul.log .d{color:var(--ink-3);font-size:.76rem;white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink-3);font-weight:600;font-size:.72rem;letter-spacing:.06em;border-bottom:1px solid var(--rule)}
+  footer{color:var(--ink-3);font-size:.7rem;margin-top:4px;border-top:1px solid var(--line);padding-top:10px}
+  .overflow{overflow-x:auto}
+  /* 詳細ページ */
+  .callout{border-left:3px solid var(--rule);padding:10px 14px;background:var(--panel);font-size:.88rem;margin-bottom:16px}
+  ul.goals{list-style:none}
+  ul.goals li{padding:8px 0 8px 24px;border-bottom:1px solid var(--line);font-size:.88rem;position:relative}
+  ul.goals li:last-child{border-bottom:none}
+  ul.goals li::before{content:"□";position:absolute;left:2px;top:8px;color:var(--ink-3)}
+  .ss{border-bottom:1px solid var(--line);padding:12px 0}
+  .ss:last-child{border-bottom:none}
+  .ss .head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ss .nm{font-weight:600;font-size:.9rem}
+  .badge{font-size:.68rem;padding:1px 9px;border-radius:2px;border:1px solid var(--ink-3);color:var(--ink-2)}
+  .b3{background:var(--rule);color:#fff;border-color:var(--rule)}
+  .b2{border-color:var(--ink-2);color:var(--ink)}
+  .b1{}
+  .b0{border-style:dashed;color:var(--ink-3)}
+  .gapnote{font-size:.72rem;color:var(--ink-3)}
+  .segs{display:inline-flex;gap:3px;margin-left:auto}
+  .seg{width:24px;height:8px;background:var(--track);border:1px solid var(--line)}
+  .seg.f{background:var(--bar);border-color:var(--bar)}
+  .ss .ideal{font-size:.84rem;color:var(--ink-2);margin-top:5px}
+  .ss .ideal b{color:var(--ink);font-weight:600}
+  .ss .note{font-size:.74rem;color:var(--ink-3);margin-top:2px}
+  ul.means{list-style:none}
+  ul.means li{padding:7px 0 7px 20px;position:relative;font-size:.86rem;border-bottom:1px solid var(--line)}
+  ul.means li:last-child{border-bottom:none}
+  ul.means li::before{content:"—";position:absolute;left:0;color:var(--ink-3)}
+  ul.todos{list-style:none}
+  ul.todos li{padding:7px 0;font-size:.85rem;border-bottom:1px solid var(--line)}
+  ul.todos li:last-child{border-bottom:none}
+  .done{color:var(--ink-3);text-decoration:line-through}
+</style>
+</head>
+<body>
+
+<nav><a href="dashboard.html" class="on">ダッシュボード</a><a href="axes/sales.html">1. 営業</a><a href="axes/consulting.html">2. コンサル力</a><a href="axes/tech.html">3. 技術</a><a href="axes/ops.html">4. オペレーション</a><a href="axes/hr.html">5. HR</a><a href="axes/finance.html">6. ファイナンス</a><a href="axes/other.html">7. その他ビジネス知識</a></nav>
+<header>
+  <h1>1,000億ロードマップ</h1>
+  <p class="constant"><strong>定数:</strong> ロックアップ満了後に起業し、時価総額1,000億円の企業を作る（ドメイン: コンサル型 or AI型 → 2027-05-06までに決定）</p>
+  <p class="meta">最終生成: 2026-08-17 ・ 基準単価: 320万/月案件 ×3本並行 ≒ 月商1,000万円を一人で</p>
+</header>
+
+<div class="tiles">
+  <div class="tile"><div class="k">フェーズ</div><div class="v">Phase 0</div><div class="s">仕込み期</div></div>
+  <div class="tile"><div class="k">ロックアップ満了まで</div><div class="v">約21ヶ月</div><div class="s">2028-05-06</div></div>
+  <div class="tile"><div class="k">次のマイルストーン</div><div class="v">11-06</div><div class="s">四半期チェック①（7軸再採点）＋ドメイン仮説を2〜3</div></div>
+  <div class="tile"><div class="k">今週の成果物</div><div class="v">8</div><div class="s">daily/の✅を自動集計</div></div>
+</div>
+<section>
+  <h2>直近TODO — 今やること（上から順）</h2>
+  <p class="sub">方針: Optageキックオフ準備を中心に、社内キャッチアップを並行で潰す</p>
+  <ul class="todos"><li class="done">✓ FDE業界の外観（定義・歴史・Palantirモデル・従来SIとの対比・FDE化のネック）[コンサル][技術] → 成果物: [research/2026-08-17_FDE業界構造とSI対比.md](research/2026-08-17_FDE業界構造とSI対比.md)</li><li class="done">✓ 日本でSI→FDE型へ移行している企業の実例 [その他] → 成果物: [research/2026-08-17_FDE業界構造とSI対比.md](research/2026-08-17_FDE業界構造とSI対比.md)</li><li class="done">✓ 高収益コンサルの構造分析（ベイカレント等）＋AIコンサル（PKSHA等）＋AI会社の分類マップ [Fin][ドメイン決定] → 成果物: [research/2026-08-17_高収益コンサルとAI企業分類.md](research/2026-08-17_高収益コンサルとAI企業分類.md)</li><li>□ 社内: 過去案件の整理・全把握（_archive/projects/ の棚卸し）[営業][コンサル]</li><li>□ 社内: M&amp;A状況の把握（WL売却スキーム・自分の株式報酬/ロックアップ条項）[Fin][その他]</li><li>□ 社内: P/L構造の把握 [Fin]</li><li>□ オペレーション駆動型企業の研究（レバレジーズ → SHIFT → M&amp;A総研 → ベイカレント深掘り）[Ops][ドメイン決定]</li></ul>
+</section>
+<section>
+  <h2>7軸スキルツリー</h2>
+  <p class="sub">現在レベル（バー）と創業時目標（縦線）。軸名をクリックで詳細ページ（サブスキル別の理想×現実ギャップ）へ。</p>
+  <div class="axis"><div class="name"><a href="axes/sales.html">営業 ↗</a><small>自分起点の受注力</small></div><div class="trackbar" title="現在Lv1 / 目標Lv4"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:20%"></span><span class="tmark" style="left:80%"></span></div><div class="lvl">Lv1 → 4（-3）</div></div><div class="axis"><div class="name"><a href="axes/consulting.html">コンサル力 ↗</a><small>論点設計〜提案〜デリバリー</small></div><div class="trackbar" title="現在Lv2 / 目標Lv4"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:40%"></span><span class="tmark" style="left:80%"></span></div><div class="lvl">Lv2 → 4（-2）</div></div><div class="axis"><div class="name"><a href="axes/tech.html">技術 ↗</a><small>AI/RAG設計・実装</small></div><div class="trackbar" title="現在Lv2 / 目標Lv4"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:40%"></span><span class="tmark" style="left:80%"></span></div><div class="lvl">Lv2 → 4（-2）</div></div><div class="axis"><div class="name"><a href="axes/ops.html">オペレーション ↗</a><small>仕組み設計・組織運営</small></div><div class="trackbar" title="現在Lv2 / 目標Lv4"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:40%"></span><span class="tmark" style="left:80%"></span></div><div class="lvl">Lv2 → 4（-2）</div></div><div class="axis"><div class="name"><a href="axes/hr.html">HR ↗</a><small>採用・評価・文化</small></div><div class="trackbar" title="現在Lv1 / 目標Lv3"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:20%"></span><span class="tmark" style="left:60%"></span></div><div class="lvl">Lv1 → 3（-2）</div></div><div class="axis"><div class="name"><a href="axes/finance.html">ファイナンス ↗</a><small>財務モデル・資本政策</small></div><div class="trackbar" title="現在Lv1 / 目標Lv4"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:20%"></span><span class="tmark" style="left:80%"></span></div><div class="lvl">Lv1 → 4（-3）</div></div><div class="axis"><div class="name"><a href="axes/other.html">その他ビジネス知識 ↗</a><small>契約・法務・英語・業界知識</small></div><div class="trackbar" title="現在Lv1 / 目標Lv3"><span class="grid5" style="left:20%"></span><span class="grid5" style="left:40%"></span><span class="grid5" style="left:60%"></span><span class="grid5" style="left:80%"></span><span class="fill" style="width:20%"></span><span class="tmark" style="left:60%"></span></div><div class="lvl">Lv1 → 3（-2）</div></div>
+  <div class="legend"><span><span class="sw"></span>現在レベル</span><span><span class="tg"></span>創業時目標（2028-05）</span><span>目盛: Lv1〜5</span></div>
+  <p class="warn">⚠️ 現在レベルは仮採点（校正壁打ち未実施）</p>
+</section>
+<section>
+  <h2>今のフォーカス</h2>
+  <ul class="log"><li> <strong>Optageキックオフ準備が中心</strong>（FDE定義/歴史・SI事業モデル・FDE化のネック・移行事例・高収益コンサル/AI会社分類）→ TODO 直近TODO</li><li> 社内キャッチアップを並行で潰す（過去案件整理・M&amp;A状況・P/L構造が重要3点）→ TODO レーン1</li><li>※ 7軸の仮採点を壁打ちで校正する（未実施）</li></ul>
+</section>
+<section>
+  <h2>TODOバックログ（3レーン）</h2>
+  <p class="sub">攻める順: 社内リサーチ全潰し → Optage FDE駆動 → 社外・ドメイン決定</p>
+  <div class="lane"><div class="row"><span class="t">レーン1: 社内キャッチアップ（並行で全部潰す）</span><span class="n">0 / 6 完了</span></div><div class="pbar"><span class="pf" style="width:0%"></span></div></div><div class="lane"><div class="row"><span class="t">レーン2: Optageキックオフ駆動インプット（中心。ここに注力）</span><span class="n">9 / 11 完了</span></div><div class="pbar"><span class="pf" style="width:82%"></span></div></div><div class="lane"><div class="row"><span class="t">レーン3: 社外リサーチ（ドメイン決定・1,000億逆算）</span><span class="n">0 / 10 完了</span></div><div class="pbar"><span class="pf" style="width:0%"></span></div></div>
+</section>
+<section>
+  <h2>直近の進捗</h2>
+  <ul class="log"><li><span class="d">2026-08-17:</span><span>可視化サイト生成の仕組み完成（generate_site.py — MD単一ソースから全ページ自動生成、軸別詳細ページで37サブスキルの理想×現実ギャップを可視化）</span></li><li><span class="d">2026-08-17:</span><span><strong>7軸の2028-05ゴール定義v1完成</strong>（サブスキル分解＋「創業日に何ができないと死ぬか」逆算。基準: 320万案件×3本並行≒月商1,000万を一人で）</span></li><li><span class="d">2026-08-17:</span><span>ロードマップシステム構築＋要件定義完了（1,000億を定数として宣言）</span></li></ul>
+</section>
+<section>
+  <h2>マイルストーン</h2>
+  <div class="overflow"><table><tr><th>期日</th><th>内容</th><th>状態</th></tr><tr><td>2026-11-06</td><td>四半期チェック①（7軸再採点）＋ドメイン仮説を2〜3本に絞る</td><td>□</td></tr><tr><td>2027-05-06</td><td><strong>ドメイン決定（コンサル型 or AI型）</strong>＋顧客ヒアリング開始</td><td>□</td></tr><tr><td>2027-11-06</td><td>事業計画v1・共同創業者候補・調達ストーリーの3点セット</td><td>□</td></tr><tr><td>2028-05-06</td><td>ロックアップ満了 → 創業準備に全面移行</td><td>□</td></tr></table></div>
+</section>
+<footer>単一ソース: SKILL-TREE.md / TODO.md / STATUS.md / ROADMAP.md / daily/ ・ 再生成: python3 generate_site.py ・ 制約条件: 睡眠7h・優しさ・深いつながり</footer>
+</body>
+</html>
